@@ -5,6 +5,12 @@ import {
 	useNoticeModalStore,
 } from "./stores/useNoticeModalStore";
 import { Button } from "../../src/System/Button";
+import { Avatar } from "../../src/System/Avatar";
+import { Badge } from "../../src/System/Badge";
+import { Card, CardBody, CardDescription, CardFooter, CardHeader, CardIcon, CardTitle } from "../../src/System/Card";
+import { GridMenu, GridMenuItem, GridMenuItemIcon, GridMenuItemLabel } from "../../src/System/GridMenu";
+import { PageHeader, PageHeaderTitle } from "../../src/System/PageHeader";
+import { PageTabList, PageTabTrigger, TabList, TabPanel, TabRoot, TabTrigger } from "../../src/System/Tab";
 import {
 	FormInputField,
 	FormNote,
@@ -60,7 +66,6 @@ import {
 	SystemModalTrigger,
 	SystemModalWarning,
 } from "../../src/System/SystemModal";
-import { TabList, TabPanel, TabRoot, TabTrigger } from "../../src/System/Tab";
 import {
 	TableBody,
 	TableCell,
@@ -494,10 +499,105 @@ export function App() {
 			: null;
 
 	return (
-		<main className="grid min-h-screen place-items-center bg-ll-white p-6">
+		<main className="grid min-h-screen place-items-center bg-ll-page-bg p-6">
+			<div className="mb-8 w-full max-w-md space-y-6">
+				<PageHeader>
+					<PageHeaderTitle>Sample Page</PageHeaderTitle>
+				</PageHeader>
+
+				<div className="flex flex-wrap gap-2 px-4">
+					<Badge>Default</Badge>
+					<Badge variant="muted">Label</Badge>
+					<Badge variant="accent">Deadline</Badge>
+					<Badge variant="mutual">Mutual</Badge>
+				</div>
+
+				<div className="flex items-center gap-3 px-4">
+					<Avatar size="sm" />
+					<Avatar size="md" />
+					<Avatar size="lg" />
+				</div>
+
+				<TabRoot defaultValue="tab-a">
+					<PageTabList>
+						<PageTabTrigger value="tab-a">Tab A</PageTabTrigger>
+						<PageTabTrigger value="tab-b">Tab B</PageTabTrigger>
+						<PageTabTrigger value="tab-c">Tab C</PageTabTrigger>
+					</PageTabList>
+					<TabPanel value="tab-a">
+						<div className="space-y-3 p-4">
+							<Card>
+								<CardHeader>
+									<div className="flex items-center gap-3">
+										<Avatar size="lg" />
+										<div>
+											<CardTitle>User Name</CardTitle>
+											<CardDescription>Description text</CardDescription>
+										</div>
+									</div>
+									<Button variant="danger" size="sm">Action</Button>
+								</CardHeader>
+							</Card>
+							<Card>
+								<CardHeader>
+									<div className="flex items-center gap-3">
+										<CardIcon>
+											<span className="text-ll-label text-lg">S</span>
+										</CardIcon>
+										<div>
+											<CardTitle>Item Title</CardTitle>
+											<CardDescription>Item description here.</CardDescription>
+										</div>
+									</div>
+									<Button size="sm">Confirm</Button>
+								</CardHeader>
+								<CardFooter>
+									<Badge variant="muted">Date</Badge>
+									<Badge variant="accent">Info</Badge>
+								</CardFooter>
+							</Card>
+						</div>
+					</TabPanel>
+					<TabPanel value="tab-b">
+						<div className="p-4 text-ll-gray text-sm">Tab B content</div>
+					</TabPanel>
+					<TabPanel value="tab-c">
+						<div className="p-4 text-ll-gray text-sm">Tab C content</div>
+					</TabPanel>
+				</TabRoot>
+
+				<GridMenu>
+					<GridMenuItem>
+						<GridMenuItemLabel>Store A</GridMenuItemLabel>
+						<GridMenuItemIcon>
+							<span className="text-2xl">A</span>
+						</GridMenuItemIcon>
+					</GridMenuItem>
+					<GridMenuItem>
+						<GridMenuItemLabel>Store B</GridMenuItemLabel>
+						<GridMenuItemIcon>
+							<span className="text-2xl">B</span>
+						</GridMenuItemIcon>
+					</GridMenuItem>
+					<GridMenuItem>
+						<GridMenuItemLabel>Store C</GridMenuItemLabel>
+						<GridMenuItemIcon>
+							<span className="text-2xl">C</span>
+						</GridMenuItemIcon>
+					</GridMenuItem>
+					<GridMenuItem>
+						<GridMenuItemLabel>Store D</GridMenuItemLabel>
+						<GridMenuItemIcon>
+							<span className="text-2xl">D</span>
+						</GridMenuItemIcon>
+					</GridMenuItem>
+				</GridMenu>
+			</div>
+
 			<div className="mb-4 flex flex-wrap gap-3">
 				<Button>Primary</Button>
 				<Button variant="secondary">Secondary</Button>
+				<Button variant="danger">Danger</Button>
 				<Button disabled>Primary Disabled</Button>
 				<Button variant="secondary" disabled>
 					Secondary Disabled
