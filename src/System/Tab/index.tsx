@@ -4,4 +4,11 @@ export {
 	TabRootPrimitive,
 	TabTriggerPrimitive,
 } from "./primitives";
-export { TabList, TabPanel, TabRoot, TabTrigger } from "./structure";
+export {
+	PageTabList,
+	PageTabTrigger,
+	TabList,
+	TabPanel,
+	TabRoot,
+	TabTrigger,
+} from "./structure";

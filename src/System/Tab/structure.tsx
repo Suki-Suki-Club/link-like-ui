@@ -65,6 +65,42 @@ export const TabTrigger = forwardRef<
 
 TabTrigger.displayName = "TabTrigger";
 
+export const PageTabList = forwardRef<
+	ElementRef<typeof TabListPrimitive>,
+	ComponentPropsWithoutRef<typeof TabListPrimitive>
+>(({ className, ...props }, ref) => {
+	return (
+		<TabListPrimitive
+			ref={ref}
+			className={cn(
+				"inline-flex w-full items-center border-b border-ll-disabled bg-ll-white",
+				className,
+			)}
+			{...props}
+		/>
+	);
+});
+
+PageTabList.displayName = "PageTabList";
+
+export const PageTabTrigger = forwardRef<
+	ElementRef<typeof TabTriggerPrimitive>,
+	ComponentPropsWithoutRef<typeof TabTriggerPrimitive>
+>(({ className, ...props }, ref) => {
+	return (
+		<TabTriggerPrimitive
+			ref={ref}
+			className={cn(
+				"relative inline-flex min-h-10 flex-1 items-center justify-center px-2 text-[0.85rem] font-semibold text-ll-disabled transition-colors data-[state=active]:text-ll-gray data-[state=active]:after:absolute data-[state=active]:after:bottom-0 data-[state=active]:after:left-0 data-[state=active]:after:h-[2px] data-[state=active]:after:w-full data-[state=active]:after:bg-ll-label",
+				className,
+			)}
+			{...props}
+		/>
+	);
+});
+
+PageTabTrigger.displayName = "PageTabTrigger";
+
 export const TabPanel = forwardRef<
 	ElementRef<typeof TabPanelPrimitive>,
 	ComponentPropsWithoutRef<typeof TabPanelPrimitive> & {
