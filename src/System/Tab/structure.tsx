@@ -23,7 +23,7 @@ export const TabRoot = forwardRef<
 	ComponentPropsWithoutRef<typeof TabRootPrimitive>
 >(({ className, ...props }, ref) => {
 	return (
-		<TabRootPrimitive ref={ref} className={cn("mt-4", className)} {...props} />
+		<TabRootPrimitive ref={ref} className={cn("mt-0", className)} {...props} />
 	);
 });
 
