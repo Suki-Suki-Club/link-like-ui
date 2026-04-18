@@ -1,5 +1,18 @@
 import { useState } from "react";
 import {
+	LuBadgeCheck,
+	LuCalendarDays,
+	LuCircle,
+	LuGift,
+	LuLayoutGrid,
+	LuNewspaper,
+	LuShoppingCart,
+	LuVolume2,
+} from "react-icons/lu";
+import { Layout, type LayoutBannerDefinition, type LayoutTileDefinition } from "../../src/Home/Layout";
+import { GradientIcon } from "../../src/System/Icon";
+import homeBannerImage from "../assets/images/600x150.png";
+import {
 	noticeTabValues,
 	type NoticeTabValue,
 	useNoticeModalStore,
@@ -74,6 +87,7 @@ import {
 	TableRoot,
 	TableRow,
 } from "../../src/System/Table";
+
 
 const tabValues = ["tab-01", "tab-02", "tab-03", "tab-04", "tab-05"] as const;
 type ControlTabValue = (typeof tabValues)[number];
@@ -422,6 +436,24 @@ function createInitialPerformerFilters(): Record<string, string> {
 	return initialMap;
 }
 
+const homeMenuTiles: LayoutTileDefinition[] = [
+	{ id: "tile-mission", label: "Mission", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuBadgeCheck} /> },
+	{ id: "tile-present", label: "Present", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuGift} /> },
+	{ id: "tile-shop", label: "Shop", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuShoppingCart} /> },
+	{ id: "tile-collection", label: "Collection", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuLayoutGrid} /> },
+	{ id: "tile-circle", label: "Circle", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuCircle} /> },
+	{ id: "tile-news", label: "News", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuNewspaper} /> },
+	{ id: "tile-event", label: "Event", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuCalendarDays} /> },
+	{ id: "tile-sound", label: "Sound", colSpan: 1, rowSpan: 1, icon: <GradientIcon icon={LuVolume2} /> },
+];
+
+const homeTopBanners: LayoutBannerDefinition[] = [
+	{ id: "banner-01", src: homeBannerImage, alt: "Banner 01", badge: "New" },
+	{ id: "banner-02", src: homeBannerImage, alt: "Banner 02" },
+	{ id: "banner-03", src: homeBannerImage, alt: "Banner 03", badge: "New" },
+	{ id: "banner-04", src: homeBannerImage, alt: "Banner 04" },
+];
+
 export function App() {
 	const [isLoadingVisible, setIsLoadingVisible] = useState<boolean>(false);
 	const [activeTab, setActiveTab] = useState<ControlTabValue>("tab-01");
@@ -497,6 +529,21 @@ export function App() {
 		currentNoticeView?.type === "detail"
 			? findNoticeItemById(currentNoticeView.itemId)
 			: null;
+
+	const pathname = globalThis.location.pathname;
+
+	if (pathname !== "/components") {
+		return (
+			<main className="h-dvh overflow-hidden bg-ll-white">
+				<Layout
+					defaultMenuOpen
+					menuTiles={homeMenuTiles}
+					topBanners={homeTopBanners}
+					variant="home"
+				/>
+			</main>
+		);
+	}
 
 	return (
 		<main className="grid min-h-screen place-items-center bg-ll-page-bg p-6">

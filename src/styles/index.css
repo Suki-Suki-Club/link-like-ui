@@ -47,6 +47,48 @@
 	--color-ll-prism-4: #93a5fb;
 	--color-ll-prism-5: #9da3fb;
 	--color-ll-prism-6: #a3a7fb;
+	--color-ll-badge-orange: #fc9060;
+	--color-ll-badge-red: #fa575e;
+}
+
+@keyframes llHomeMenuEnter {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(100dvh) scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0) scale(1);
+	}
+}
+
+@keyframes llHomeMenuExit {
+	from {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0) scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(-50%) translateY(100dvh) scale(0.8);
+	}
+}
+
+@keyframes llHomeMenuScrimIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes llHomeMenuScrimOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }
 
 @keyframes ll-system-modal-open {
