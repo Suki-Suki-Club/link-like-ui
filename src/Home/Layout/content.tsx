@@ -35,10 +35,12 @@ export type {
 export interface LayoutProps {
 	actions?: LayoutAction[];
 	centerContent?: ReactNode;
+	children?: ReactNode;
 	dateLabel?: string;
 	defaultMenuOpen?: boolean;
 	homeAction?: LayoutAction;
 	menuTiles: LayoutTileDefinition[];
+	sheetBottomContent?: ReactNode;
 	topBanners: LayoutBannerDefinition[];
 	rightContent?: ReactNode;
 	statusLabel?: string;
@@ -50,10 +52,12 @@ const layoutMenuAnimationDurationMs = 220;
 
 function HomeLayout({
 	centerContent,
+	children,
 	defaultMenuOpen = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
 	menuTiles,
 	rightContent,
+	sheetBottomContent,
 	topBanners,
 }: Omit<LayoutProps, "variant">) {
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(defaultMenuOpen);
@@ -114,8 +118,14 @@ function HomeLayout({
 				battery={battery}
 				centerContent={centerContent}
 				clock={clock}
+				hideClock={children != null}
 				rightContent={rightContent}
 			/>
+			{children != null && (
+				<div className="absolute inset-x-0 top-[3.05rem] bottom-[var(--ll-home-dock-height)] overflow-auto z-[1] bg-ll-page-bg">
+					{children}
+				</div>
+			)}
 			{isMenuVisible ? (
 				<LayoutScrim
 					aria-label="Close menu"
@@ -130,6 +140,7 @@ function HomeLayout({
 				/>
 			) : null}
 			<HomeLayoutSheet
+				bottomContent={sheetBottomContent}
 				isMenuOpen={isMenuOpen}
 				isMenuVisible={isMenuVisible}
 				menuTiles={menuTiles}

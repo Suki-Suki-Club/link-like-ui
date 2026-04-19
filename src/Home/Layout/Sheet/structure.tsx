@@ -32,7 +32,7 @@ export function LayoutSheet({
 	return (
 		<LayoutPanelBase
 			className={cn(
-				"absolute bottom-[calc(var(--ll-home-dock-height)+var(--ll-home-sheet-gap))] left-1/2 z-20 max-h-[calc(100dvh-var(--ll-home-sheet-top-safe)-var(--ll-home-dock-height)-var(--ll-home-sheet-gap))] w-[calc(100%-4rem)] max-w-100 overflow-y-auto rounded-[1.45rem] border border-ll-white/62 bg-ll-white/18 p-4 shadow-[0_12px_34px_color-mix(in_srgb,var(--color-ll-gray)_16%,transparent)] backdrop-blur-[18px] transition-[opacity,transform] duration-200 ease-out",
+				"absolute bottom-[calc(var(--ll-home-dock-height)+var(--ll-home-sheet-gap))] left-1/2 z-20 flex flex-col max-h-[calc(100dvh-var(--ll-home-sheet-top-safe)-var(--ll-home-dock-height)-var(--ll-home-sheet-gap))] w-[calc(100%-4rem)] max-w-100 overflow-hidden rounded-[1.45rem] border border-ll-white/62 bg-ll-white/18 p-4 shadow-[0_12px_34px_color-mix(in_srgb,var(--color-ll-gray)_16%,transparent)] backdrop-blur-[18px] transition-[opacity,transform] duration-200 ease-out",
 				className,
 			)}
 			{...props}

@@ -31,6 +31,7 @@ export interface LayoutTileDefinition {
 }
 
 interface HomeLayoutSheetProps {
+	bottomContent?: ReactNode;
 	isMenuOpen: boolean;
 	isMenuVisible: boolean;
 	menuTiles: LayoutTileDefinition[];
@@ -38,6 +39,7 @@ interface HomeLayoutSheetProps {
 }
 
 export function HomeLayoutSheet({
+	bottomContent,
 	isMenuOpen,
 	isMenuVisible,
 	menuTiles,
@@ -58,37 +60,44 @@ export function HomeLayoutSheet({
 					: "pointer-events-none animate-[llHomeMenuExit_220ms_cubic-bezier(0.4,0,0.2,1)_both]"
 			}
 		>
-			<LayoutSheetStack>
-				{topBanners.map((banner) => (
-					<LayoutImageBanner
-						key={banner.id}
-						aria-label={banner.alt}
-						{...(banner.onClick ? { onClick: banner.onClick } : {})}
-					>
-						<LayoutImageBannerMedia alt={banner.alt} src={banner.src} />
-						{banner.badge ? (
-							<div className="pointer-events-none absolute -top-3 right-0 z-10">
-								<LayoutTileBadge>{banner.badge}</LayoutTileBadge>
-							</div>
-						) : null}
-					</LayoutImageBanner>
-				))}
-				<LayoutGrid className="pt-2">
-					{menuTiles.map((tile) => (
-						<LayoutQuickTile
-							key={tile.id}
-							colSpan={tile.colSpan}
-							label={tile.label}
-							rowSpan={tile.rowSpan}
-							{...(tile.badge ? { badge: tile.badge } : {})}
-							{...((tile.icon ?? tile.illustration)
-								? { illustration: tile.icon ?? tile.illustration }
-								: {})}
-							{...(tile.onClick ? { onClick: tile.onClick } : {})}
-						/>
+			{/* タイル・バナー部分: スクロール可 */}
+			<div className="flex-1 overflow-y-auto min-h-0">
+				<LayoutSheetStack>
+					{topBanners.map((banner) => (
+						<LayoutImageBanner
+							key={banner.id}
+							aria-label={banner.alt}
+							{...(banner.onClick ? { onClick: banner.onClick } : {})}
+						>
+							<LayoutImageBannerMedia alt={banner.alt} src={banner.src} />
+							{banner.badge ? (
+								<div className="pointer-events-none absolute -top-3 right-0 z-10">
+									<LayoutTileBadge>{banner.badge}</LayoutTileBadge>
+								</div>
+							) : null}
+						</LayoutImageBanner>
 					))}
-				</LayoutGrid>
-			</LayoutSheetStack>
+					<LayoutGrid className="pt-2">
+						{menuTiles.map((tile) => (
+							<LayoutQuickTile
+								key={tile.id}
+								colSpan={tile.colSpan}
+								label={tile.label}
+								rowSpan={tile.rowSpan}
+								{...(tile.badge ? { badge: tile.badge } : {})}
+								{...((tile.icon ?? tile.illustration)
+									? { illustration: tile.icon ?? tile.illustration }
+									: {})}
+								{...(tile.onClick ? { onClick: tile.onClick } : {})}
+							/>
+						))}
+					</LayoutGrid>
+				</LayoutSheetStack>
+			</div>
+			{/* NowPlayingCard: スクロール外・常に下部に表示 */}
+			{bottomContent != null && (
+				<div className="shrink-0 pt-4">{bottomContent}</div>
+			)}
 		</LayoutSheet>
 	);
 }

@@ -13,6 +13,7 @@ interface HomeLayoutHeaderProps {
 	battery: LayoutBatteryState;
 	centerContent?: ReactNode;
 	clock: LayoutClockState;
+	hideClock?: boolean;
 	rightContent?: ReactNode;
 }
 
@@ -20,6 +21,7 @@ export function HomeLayoutHeader({
 	battery,
 	centerContent,
 	clock,
+	hideClock = true,
 	rightContent,
 }: HomeLayoutHeaderProps) {
 	return (
@@ -45,17 +47,19 @@ export function HomeLayoutHeader({
 					</div>
 				) : null}
 			</LayoutHeader>
-			<LayoutClock>
-				<p className="text-[4.9rem] leading-[0.8] font-light tracking-[-0.1em]">
-					{clock.hours}
-				</p>
-				<p className="mt-[-0.42rem] text-[4.9rem] leading-[0.8] font-light tracking-[-0.1em]">
-					{clock.minutes}
-				</p>
-				<p className="mt-[0.1rem] pr-[0.15rem] text-[0.72rem] leading-none tracking-[0.18em] text-ll-white/72">
-					{clock.dateLabel}
-				</p>
-			</LayoutClock>
+			{!hideClock && (
+				<LayoutClock>
+					<p className="text-[4.9rem] leading-[0.8] font-light tracking-[-0.1em]">
+						{clock.hours}
+					</p>
+					<p className="mt-[-0.42rem] text-[4.9rem] leading-[0.8] font-light tracking-[-0.1em]">
+						{clock.minutes}
+					</p>
+					<p className="mt-[0.1rem] pr-[0.15rem] text-[0.72rem] leading-none tracking-[0.18em] text-ll-white/72">
+						{clock.dateLabel}
+					</p>
+				</LayoutClock>
+			)}
 		</>
 	);
 }
