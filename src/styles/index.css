@@ -51,6 +51,24 @@
 	--color-ll-badge-red: #fa575e;
 }
 
+@media not all and (min-width: 40rem) {
+	.ll-sp-safe-top {
+		padding-top: env(safe-area-inset-top, 0px);
+	}
+}
+
+@media not all and (min-width: 40rem) and (display-mode: standalone) {
+	@supports (-webkit-touch-callout: none) {
+		.ll-home-layout-root {
+			--ll-home-dock-height: calc(
+				4rem +
+				env(safe-area-inset-bottom, 0px) +
+				1rem
+			);
+		}
+	}
+}
+
 @keyframes llHomeMenuEnter {
 	from {
 		opacity: 0;

@@ -34,6 +34,7 @@ export type {
 
 export interface LayoutProps {
 	actions?: LayoutAction[];
+	backAction?: LayoutAction;
 	centerContent?: ReactNode;
 	children?: ReactNode;
 	dateLabel?: string;
@@ -51,6 +52,15 @@ export interface LayoutProps {
 const layoutMenuAnimationDurationMs = 220;
 
 function HomeLayout({
+	backAction = {
+		ariaLabel: "Back",
+		label: "Back",
+		onClick: () => {
+			if (globalThis.history.length > 1) {
+				globalThis.history.back();
+			}
+		},
+	},
 	centerContent,
 	children,
 	defaultMenuOpen = false,
@@ -64,6 +74,56 @@ function HomeLayout({
 	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(defaultMenuOpen);
 	const [clock, setClock] = useState(() => formatLocalClock(new Date()));
 	const battery = useBatteryState();
+
+	const closeMenu = () => {
+		setIsMenuOpen(false);
+	};
+
+	const createNavigationHandler = (
+		handler?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"],
+	) => {
+		if (!handler) {
+			return undefined;
+		}
+
+		return (event: Parameters<NonNullable<typeof handler>>[0]) => {
+			handler(event);
+			if (!event.defaultPrevented) {
+				closeMenu();
+			}
+		};
+	};
+
+	const handleBackButtonClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"] =
+		(event) => {
+			if (isMenuOpen) {
+				event.preventDefault();
+				closeMenu();
+				return;
+			}
+
+			backAction.onClick?.(event);
+		};
+
+	const dockBackAction = {
+		...backAction,
+		onClick: handleBackButtonClick,
+	};
+
+	const dockHomeAction = {
+		...homeAction,
+		onClick: createNavigationHandler(homeAction.onClick),
+	};
+
+	const closableMenuTiles = menuTiles.map((tile) => ({
+		...tile,
+		onClick: createNavigationHandler(tile.onClick),
+	}));
+
+	const closableTopBanners = topBanners.map((banner) => ({
+		...banner,
+		onClick: createNavigationHandler(banner.onClick),
+	}));
 
 	useEffect(() => {
 		const timerId = globalThis.setInterval(() => {
@@ -135,7 +195,7 @@ function HomeLayout({
 							: "animate-[llHomeMenuScrimOut_220ms_ease-out_both]"
 					}
 					onClick={() => {
-						setIsMenuOpen(false);
+						closeMenu();
 					}}
 				/>
 			) : null}
@@ -143,11 +203,12 @@ function HomeLayout({
 				bottomContent={sheetBottomContent}
 				isMenuOpen={isMenuOpen}
 				isMenuVisible={isMenuVisible}
-				menuTiles={menuTiles}
-				topBanners={topBanners}
+				menuTiles={closableMenuTiles}
+				topBanners={closableTopBanners}
 			/>
 			<HomeLayoutDock
-				homeAction={homeAction}
+				backAction={dockBackAction}
+				homeAction={dockHomeAction}
 				isMenuOpen={isMenuOpen}
 				onToggleMenu={() => {
 					setIsMenuOpen((currentValue) => !currentValue);

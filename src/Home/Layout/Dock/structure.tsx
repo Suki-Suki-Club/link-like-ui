@@ -24,7 +24,7 @@ export function LayoutDockSurface({
 	return (
 		<div
 			className={cn(
-				"grid grid-cols-3 overflow-hidden rounded-t-[1.15rem] border border-b-0 border-ll-white/78 bg-ll-white shadow-[0_8px_18px_color-mix(in_srgb,var(--color-ll-gray)_14%,transparent)]",
+				"grid h-full grid-cols-3 overflow-hidden rounded-t-[1.15rem] border border-b-0 border-ll-white/78 bg-ll-white shadow-[0_8px_18px_color-mix(in_srgb,var(--color-ll-gray)_14%,transparent)]",
 				className,
 			)}
 			{...props}
@@ -39,7 +39,7 @@ export function LayoutDockButton({
 	return (
 		<LayoutButtonBase
 			className={cn(
-				"pointer-events-auto relative flex h-[4rem] items-center justify-center text-[2.22rem] text-ll-label transition-colors hover:text-ll-system-right focus-visible:outline-3 focus-visible:outline-ll-label",
+				"pointer-events-auto relative flex h-16 appearance-none items-center justify-center p-0 leading-none text-[2rem] text-ll-label transition-colors hover:text-ll-system-right focus-visible:outline-3 focus-visible:outline-ll-label [&>svg]:mx-auto [&>svg]:block [&>svg]:shrink-0",
 				className,
 			)}
 			{...props}

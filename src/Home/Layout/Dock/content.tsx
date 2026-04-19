@@ -10,6 +10,11 @@ import {
 } from "./structure";
 
 interface HomeLayoutDockProps {
+	backAction: {
+		ariaLabel: string;
+		label: string;
+		onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+	};
 	homeAction: {
 		ariaLabel: string;
 		label: string;
@@ -41,6 +46,7 @@ function MenuGlyph({ isMenuOpen }: { isMenuOpen: boolean }) {
 }
 
 export function HomeLayoutDock({
+	backAction,
 	homeAction,
 	isMenuOpen,
 	onToggleMenu,
@@ -48,8 +54,11 @@ export function HomeLayoutDock({
 	return (
 		<LayoutDock>
 			<LayoutDockSurface>
-				<LayoutDockButton aria-label="Back">
-					<BackIcon className="h-[2.5rem] w-[2.5rem]" />
+				<LayoutDockButton
+					aria-label={backAction.ariaLabel}
+					onClick={backAction.onClick}
+				>
+					<BackIcon className="h-9 w-9" />
 					<LayoutDockDivider />
 				</LayoutDockButton>
 				<LayoutDockButton
@@ -64,7 +73,7 @@ export function HomeLayoutDock({
 					aria-label={homeAction.ariaLabel}
 					onClick={homeAction.onClick}
 				>
-					<HomeIcon className="h-[2.5rem] w-[2.5rem]" />
+					<HomeIcon className="h-9 w-9" />
 				</LayoutDockButton>
 			</LayoutDockSurface>
 		</LayoutDock>
