@@ -60,8 +60,8 @@ export function HomeLayoutSheet({
 					: "pointer-events-none animate-[llHomeMenuExit_220ms_cubic-bezier(0.4,0,0.2,1)_both]"
 			}
 		>
-			{/* タイル・バナー部分: スクロール可 */}
-			<div className="flex-1 overflow-y-auto min-h-0">
+			{/* タイル・バナー部分: スクロール不可 */}
+			<div className="flex-1 min-h-0 overflow-hidden overscroll-none">
 				<LayoutSheetStack>
 					{topBanners.map((banner) => (
 						<LayoutImageBanner

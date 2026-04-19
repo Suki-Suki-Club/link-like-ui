@@ -182,7 +182,7 @@ function HomeLayout({
 				rightContent={rightContent}
 			/>
 			{children != null && (
-				<div className="absolute inset-x-0 top-[3.05rem] bottom-[var(--ll-home-dock-height)] overflow-auto z-[1] bg-ll-page-bg">
+				<div className="absolute inset-x-0 top-[3.05rem] bottom-0 overflow-auto z-1 bg-ll-page-bg pb-(--ll-home-dock-height)">
 					{children}
 				</div>
 			)}

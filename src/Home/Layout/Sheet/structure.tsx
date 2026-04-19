@@ -115,7 +115,7 @@ export function LayoutGrid({
 }: HTMLAttributes<HTMLDivElement>) {
 	return (
 		<LayoutGridBase
-			className={cn("grid grid-cols-4 gap-6", className)}
+			className={cn("grid grid-cols-4 gap-4", className)}
 			{...props}
 		/>
 	);

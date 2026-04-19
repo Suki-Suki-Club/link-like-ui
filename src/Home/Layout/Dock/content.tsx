@@ -58,7 +58,7 @@ export function HomeLayoutDock({
 					aria-label={backAction.ariaLabel}
 					onClick={backAction.onClick}
 				>
-					<BackIcon className="h-9 w-9" />
+					<BackIcon className="h-8 w-8" />
 					<LayoutDockDivider />
 				</LayoutDockButton>
 				<LayoutDockButton
@@ -73,7 +73,7 @@ export function HomeLayoutDock({
 					aria-label={homeAction.ariaLabel}
 					onClick={homeAction.onClick}
 				>
-					<HomeIcon className="h-9 w-9" />
+					<HomeIcon className="h-8 w-8" />
 				</LayoutDockButton>
 			</LayoutDockSurface>
 		</LayoutDock>
