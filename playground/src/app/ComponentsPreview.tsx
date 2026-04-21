@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LoadingOverlay } from "../../../src/System/Loading";
 import { AvatarPreview } from "./AvatarPreview";
 import { BadgePreview } from "./BadgePreview";
+import { ButtonPreview } from "./ButtonPreview";
 import { ControlModalPreview } from "./ControlModalPreview";
 import { FilterModalPreview } from "./FilterModalPreview";
 import { FormModalPreview } from "./FormModalPreview";
@@ -26,6 +27,7 @@ export function ComponentsPreview() {
 			/>
 			<AvatarPreview />
 			<BadgePreview />
+			<ButtonPreview />
 			<PageHeaderPreview />
 			<PanelModalPreview />
 			<ControlModalPreview />
