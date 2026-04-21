@@ -6,7 +6,7 @@ name: Upstream Sync
 # Behavior:
 #   1. Fetch upstream/main, merge into a fresh branch `merge/upstream-<short>-<date>`.
 #   2. If merge succeeds with no conflicts -> open a PR labeled `upstream-sync`.
-#   3. If merge has conflicts             -> open an issue labeled `upstream-sync,conflict` and abort.
+#   3. If merge has conflicts             -> open an issue labeled `upstream-sync` and `conflict`, then abort.
 #
 # Why a branch+PR (instead of pushing to main):
 #   - All upstream merges go through review so blooming-network parent can validate
@@ -111,18 +111,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cat > pr-body.md <<EOF
+          Automated sync from ${UPSTREAM_REPO} ${UPSTREAM_REF} at ${{ steps.meta.outputs.upstream_sha }}.
+
+          Checklist before merging:
+          - [ ] Run: pnpm install && pnpm run build (confirm dist/ is healthy).
+          - [ ] In parent link-like-blooming-network: bump submodule pointer, run npm run build, verify with playwright.
+          - [ ] Confirm fork-only patches still apply (see FORK_POLICY.md).
+
+          This PR was created by .github/workflows/upstream-sync.yml.
+          EOF
           gh pr create \
             --base main \
             --head "${{ steps.meta.outputs.branch }}" \
             --title "chore: sync upstream ${UPSTREAM_REPO}/${UPSTREAM_REF} (${{ steps.meta.outputs.upstream_short }})" \
-            --body "Automated sync from \`${UPSTREAM_REPO}\` \`${UPSTREAM_REF}\` at \`${{ steps.meta.outputs.upstream_sha }}\`.
-
-**Checklist before merging:**
-- [ ] Run \`pnpm install && pnpm run build\` locally and confirm \`dist/\` is healthy.
-- [ ] In parent \`link-like-blooming-network\`: bump submodule pointer, run \`npm run build\`, verify with playwright.
-- [ ] Confirm fork-only patches still apply (see \`FORK_POLICY.md\`).
-
-This PR was created by \`.github/workflows/upstream-sync.yml\`." \
+            --body-file pr-body.md \
             --label upstream-sync || true
 
       - name: Open conflict issue
@@ -130,20 +133,22 @@ This PR was created by \`.github/workflows/upstream-sync.yml\`." \
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          cat > conflict-body.md <<EOF
+          Automated upstream sync hit merge conflicts and was aborted.
+
+          - Upstream: ${UPSTREAM_REPO}/${UPSTREAM_REF} @ ${{ steps.meta.outputs.upstream_sha }}
+          - Conflicting paths: ${{ steps.merge.outputs.conflicts }}
+
+          Resolve manually:
+          1. git fetch upstream ${UPSTREAM_REF}
+          2. git checkout -b ${{ steps.meta.outputs.branch }} main
+          3. git merge upstream/${UPSTREAM_REF}
+          4. Resolve conflicts, commit, push, and open a PR.
+
+          Run Upstream Sync workflow again after resolution if needed.
+          EOF
           gh issue create \
             --title "Upstream sync conflict: ${UPSTREAM_REPO}/${UPSTREAM_REF}@${{ steps.meta.outputs.upstream_short }}" \
-            --label "upstream-sync,conflict" \
-            --body "Automated upstream sync hit merge conflicts and was aborted.
-
-- **Upstream**: \`${UPSTREAM_REPO}/${UPSTREAM_REF}\` @ \`${{ steps.meta.outputs.upstream_sha }}\`
-- **Conflicting paths**: \`${{ steps.merge.outputs.conflicts }}\`
-
-Resolve manually:
-\`\`\`bash
-git fetch upstream ${UPSTREAM_REF}
-git checkout -b ${{ steps.meta.outputs.branch }} main
-git merge upstream/${UPSTREAM_REF}
-# resolve conflicts, commit, push, open PR
-\`\`\`
-
-Run \`Upstream Sync\` workflow again after resolution if needed." || true
+            --label upstream-sync \
+            --label conflict \
+            --body-file conflict-body.md || true
