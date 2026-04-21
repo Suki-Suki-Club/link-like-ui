@@ -90,7 +90,6 @@ export interface LayoutProps {
 
 	children?: ReactNode;
 	sheetBottomContent?: ReactNode;
-	backAction?: LayoutAction;
 }
 
 export interface HomeScreenBannerInput {
@@ -152,11 +151,13 @@ function toLayoutTileDefinitions(
 
 function HomeLayout({
 	centerContent,
+	children,
 	defaultMenuOpen = false,
 	hasMenuNotification = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
 	menuTiles,
 	rightContent,
+	sheetBottomContent,
 	topBanners,
 }: Omit<LayoutProps, "variant">) {
 	const {
@@ -218,8 +219,14 @@ function HomeLayout({
 				battery={battery}
 				centerContent={centerContent}
 				clock={clock}
+				hideClock={children != null}
 				rightContent={rightContent}
 			/>
+			{children != null && (
+				<div className="absolute inset-x-0 top-[3.05rem] bottom-0 overflow-auto z-1 bg-ll-page-bg pb-(--ll-home-dock-height)">
+					{children}
+				</div>
+			)}
 			{isMenuVisible ? (
 				<LayoutScrim
 					aria-label="Close menu"
@@ -234,6 +241,7 @@ function HomeLayout({
 				/>
 			) : null}
 			<HomeLayoutSheet
+				bottomContent={sheetBottomContent}
 				isMenuOpen={isMenuOpen}
 				isMenuVisible={isMenuVisible}
 				menuTiles={menuTiles}

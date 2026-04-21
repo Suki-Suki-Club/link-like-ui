@@ -90,6 +90,7 @@ interface HomeLayoutHeaderProps {
 	battery: LayoutBatteryState;
 	centerContent?: ReactNode;
 	clock: LayoutClockState;
+	hideClock?: boolean;
 	rightContent?: ReactNode;
 }
 
@@ -97,6 +98,7 @@ export function HomeLayoutHeader({
 	battery,
 	centerContent,
 	clock,
+	hideClock = false,
 	rightContent,
 }: HomeLayoutHeaderProps) {
 	return (
@@ -119,22 +121,24 @@ export function HomeLayoutHeader({
 					</div>
 				) : null}
 			</LayoutHeader>
-			<LayoutClock>
-				<div className="w-36">
-					<ClockDigitRow value={clock.hours} />
-					<div className="mt-2">
-						<ClockDigitRow value={clock.minutes} />
+			{hideClock ? null : (
+				<LayoutClock>
+					<div className="w-36">
+						<ClockDigitRow value={clock.hours} />
+						<div className="mt-2">
+							<ClockDigitRow value={clock.minutes} />
+						</div>
+						<p
+							className={cn(
+								"mt-2 block w-full text-center text-[1.44rem] leading-none font-normal tracking-[0.12em] text-ll-white/78",
+								clockTextClassName(),
+							)}
+						>
+							{clock.dateLabel}
+						</p>
 					</div>
-					<p
-						className={cn(
-							"mt-2 block w-full text-center text-[1.44rem] leading-none font-normal tracking-[0.12em] text-ll-white/78",
-							clockTextClassName(),
-						)}
-					>
-						{clock.dateLabel}
-					</p>
-				</div>
-			</LayoutClock>
+				</LayoutClock>
+			)}
 		</>
 	);
 }
