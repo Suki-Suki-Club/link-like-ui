@@ -13,6 +13,10 @@ cpSync(
 	"src/assets/fonts/Poppins-Regular.ttf",
 	"dist/assets/fonts/Poppins-Regular.ttf",
 );
+cpSync(
+	"src/assets/fonts/Poppins-ExtraLight.ttf",
+	"dist/assets/fonts/Poppins-ExtraLight.ttf",
+);
 
 const cssImportTarget = "dist/styles/index.css";
 const entryFiles = [];
