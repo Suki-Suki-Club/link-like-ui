@@ -1,5 +1,7 @@
 import type { ButtonHTMLAttributes } from "react";
 import { BackIcon, HomeIcon } from "../../../assets/icons";
+import { cn } from "../../../utils";
+import { LayoutTileBadge } from "../Badge";
 import {
 	LayoutDock,
 	LayoutDockButton,
@@ -10,17 +12,15 @@ import {
 } from "./structure";
 
 interface HomeLayoutDockProps {
-	backAction: {
-		ariaLabel: string;
-		label: string;
-		onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
-	};
+	canGoBack: boolean;
 	homeAction: {
 		ariaLabel: string;
 		label: string;
 		onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 	};
+	hasMenuNotification: boolean;
 	isMenuOpen: boolean;
+	onBack: () => void;
 	onToggleMenu: () => void;
 }
 
@@ -46,19 +46,22 @@ function MenuGlyph({ isMenuOpen }: { isMenuOpen: boolean }) {
 }
 
 export function HomeLayoutDock({
-	backAction,
+	canGoBack,
 	homeAction,
+	hasMenuNotification,
 	isMenuOpen,
+	onBack,
 	onToggleMenu,
 }: HomeLayoutDockProps) {
 	return (
 		<LayoutDock>
 			<LayoutDockSurface>
 				<LayoutDockButton
-					aria-label={backAction.ariaLabel}
-					onClick={backAction.onClick}
+					aria-label="Back"
+					disabled={!canGoBack}
+					onClick={onBack}
 				>
-					<BackIcon className="h-8 w-8" />
+					<BackIcon className="h-10 w-10" />
 					<LayoutDockDivider />
 				</LayoutDockButton>
 				<LayoutDockButton
@@ -66,6 +69,18 @@ export function HomeLayoutDock({
 					aria-label={isMenuOpen ? "Close menu" : "Open menu"}
 					onClick={onToggleMenu}
 				>
+					{hasMenuNotification ? (
+						<LayoutTileBadge
+							aria-label="通知あり"
+							className={cn(
+								"pointer-events-none absolute top-[0.62rem] right-6 h-4.5 w-4.5 transition-opacity duration-100 ease-out",
+								isMenuOpen ? "opacity-0" : "opacity-100",
+							)}
+							variant="circle"
+						>
+							{""}
+						</LayoutTileBadge>
+					) : null}
 					<MenuGlyph isMenuOpen={isMenuOpen} />
 					<LayoutDockDivider />
 				</LayoutDockButton>
@@ -73,7 +88,7 @@ export function HomeLayoutDock({
 					aria-label={homeAction.ariaLabel}
 					onClick={homeAction.onClick}
 				>
-					<HomeIcon className="h-8 w-8" />
+					<HomeIcon className="h-10 w-10" />
 				</LayoutDockButton>
 			</LayoutDockSurface>
 		</LayoutDock>

@@ -1,4 +1,10 @@
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes } from "react";
+import {
+	homeMenuEnterAnimationClass,
+	homeMenuExitAnimationClass,
+} from "../animation";
+import { LayoutTileBadge } from "../Badge";
+import type { LayoutTileIllustrationDefinition } from "../content";
 import { LayoutQuickTile } from "./quickTile";
 import {
 	LayoutGrid,
@@ -6,7 +12,6 @@ import {
 	LayoutImageBannerMedia,
 	LayoutSheet,
 	LayoutSheetStack,
-	LayoutTileBadge,
 	type LayoutTileColumnSpan,
 	type LayoutTileRowSpan,
 } from "./structure";
@@ -22,27 +27,41 @@ export interface LayoutBannerDefinition {
 export interface LayoutTileDefinition {
 	badge?: string;
 	colSpan: LayoutTileColumnSpan;
-	icon?: ReactNode;
 	id: string;
-	illustration?: ReactNode;
+	illustration?: LayoutTileIllustrationDefinition;
 	label: string;
 	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
 	rowSpan: LayoutTileRowSpan;
+	submenu?: LayoutTileSubmenuDefinition;
+
+	icon?: ReactNode;
+}
+
+interface LayoutTileSubmenuItemDefinition {
+	icon: import("../../../System/Icon").GradientIconDefinition;
+	id: string;
+	label: string;
+	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+}
+
+interface LayoutTileSubmenuDefinition {
+	items: readonly LayoutTileSubmenuItemDefinition[];
+	title: string;
 }
 
 interface HomeLayoutSheetProps {
-	bottomContent?: ReactNode;
 	isMenuOpen: boolean;
 	isMenuVisible: boolean;
 	menuTiles: LayoutTileDefinition[];
+	onOpenSubmenu: (tileId: string) => void;
 	topBanners: LayoutBannerDefinition[];
 }
 
 export function HomeLayoutSheet({
-	bottomContent,
 	isMenuOpen,
 	isMenuVisible,
 	menuTiles,
+	onOpenSubmenu,
 	topBanners,
 }: HomeLayoutSheetProps) {
 	if (!isMenuVisible) {
@@ -56,48 +75,63 @@ export function HomeLayoutSheet({
 			aria-hidden={!isMenuOpen}
 			className={
 				isMenuOpen
-					? "animate-[llHomeMenuEnter_220ms_cubic-bezier(0.2,0.8,0.2,1)_both]"
-					: "pointer-events-none animate-[llHomeMenuExit_220ms_cubic-bezier(0.4,0,0.2,1)_both]"
+					? homeMenuEnterAnimationClass
+					: `pointer-events-none ${homeMenuExitAnimationClass}`
 			}
 		>
-			{/* タイル・バナー部分: スクロール不可 */}
-			<div className="flex-1 min-h-0 overflow-hidden overscroll-none">
-				<LayoutSheetStack>
-					{topBanners.map((banner) => (
-						<LayoutImageBanner
-							key={banner.id}
-							aria-label={banner.alt}
-							{...(banner.onClick ? { onClick: banner.onClick } : {})}
-						>
-							<LayoutImageBannerMedia alt={banner.alt} src={banner.src} />
-							{banner.badge ? (
-								<div className="pointer-events-none absolute -top-3 right-0 z-10">
-									<LayoutTileBadge>{banner.badge}</LayoutTileBadge>
-								</div>
-							) : null}
-						</LayoutImageBanner>
+			<LayoutSheetStack>
+				{topBanners.map((banner) => (
+					<LayoutImageBanner
+						key={banner.id}
+						aria-label={banner.alt}
+						{...(banner.onClick ? { onClick: banner.onClick } : {})}
+					>
+						<LayoutImageBannerMedia alt={banner.alt} src={banner.src} />
+						{banner.badge ? (
+							<div className="pointer-events-none absolute -top-3 right-0 z-10">
+								<LayoutTileBadge>{banner.badge}</LayoutTileBadge>
+							</div>
+						) : null}
+					</LayoutImageBanner>
+				))}
+				<LayoutGrid>
+					{menuTiles.map((tile) => (
+						<LayoutQuickTile
+							key={tile.id}
+							colSpan={tile.colSpan}
+							hideLabel={tile.illustration?.kind === "cluster"}
+							label={tile.label}
+							rowSpan={tile.rowSpan}
+							{...(tile.badge ? { badge: tile.badge } : {})}
+							{...(tile.illustration?.kind === "cluster"
+								? {
+										className:
+											"ll-glass-surface border-ll-white/48 p-[0.16rem] shadow-[0_0_12px_3px_color-mix(in_srgb,var(--color-ll-gray)_10%,transparent)]",
+										clusterClassName:
+											"aspect-square h-full w-full place-self-center gap-[5%] p-[6%]",
+										clusterIconClassName: "h-[76%] w-[76%]",
+										clusterItemClassName:
+											"ll-shadow-icon-tile rounded-[22%] bg-ll-white/92",
+										contentClassName: "h-full w-full justify-center gap-0 pt-0",
+										illustrationFrameClassName:
+											"aspect-square h-full w-full max-h-full max-w-full place-self-center",
+									}
+								: {})}
+							{...(tile.illustration
+								? { illustration: tile.illustration }
+								: {})}
+							onClick={(event) => {
+								if (tile.submenu) {
+									onOpenSubmenu(tile.id);
+									return;
+								}
+
+								tile.onClick?.(event);
+							}}
+						/>
 					))}
-					<LayoutGrid className="pt-2">
-						{menuTiles.map((tile) => (
-							<LayoutQuickTile
-								key={tile.id}
-								colSpan={tile.colSpan}
-								label={tile.label}
-								rowSpan={tile.rowSpan}
-								{...(tile.badge ? { badge: tile.badge } : {})}
-								{...((tile.icon ?? tile.illustration)
-									? { illustration: tile.icon ?? tile.illustration }
-									: {})}
-								{...(tile.onClick ? { onClick: tile.onClick } : {})}
-							/>
-						))}
-					</LayoutGrid>
-				</LayoutSheetStack>
-			</div>
-			{/* NowPlayingCard: スクロール外・常に下部に表示 */}
-			{bottomContent != null && (
-				<div className="shrink-0 pt-4">{bottomContent}</div>
-			)}
+				</LayoutGrid>
+			</LayoutSheetStack>
 		</LayoutSheet>
 	);
 }

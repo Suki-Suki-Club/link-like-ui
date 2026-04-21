@@ -16,11 +16,94 @@ type IconBaseElementProps = {
 
 export interface GradientIconProps
 	extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+	fitToSquare?: boolean;
 	icon: IconType;
 	paint?: GradientIconPaint;
 	size?: number | string;
 	svgClassName?: string;
 	title?: string;
+}
+
+export interface GradientIconDefinition {
+	fitToSquare?: boolean;
+	icon: IconType;
+	paint?: GradientIconPaint;
+	title: string;
+}
+
+export type GradientIconClusterItems = readonly [
+	GradientIconDefinition,
+	GradientIconDefinition,
+	GradientIconDefinition,
+	GradientIconDefinition,
+];
+
+export interface GradientIconClusterProps
+	extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+	iconClassName?: string;
+	items: GradientIconClusterItems;
+	itemClassName?: string;
+}
+
+function parseViewBox(viewBox: string | undefined): {
+	minX: number;
+	minY: number;
+	width: number;
+	height: number;
+} | null {
+	if (!viewBox) {
+		return null;
+	}
+
+	const parts = viewBox.trim().split(/\s+/);
+
+	if (parts.length !== 4) {
+		return null;
+	}
+
+	const minX = Number(parts[0]);
+	const minY = Number(parts[1]);
+	const width = Number(parts[2]);
+	const height = Number(parts[3]);
+
+	if (
+		Number.isNaN(minX) ||
+		Number.isNaN(minY) ||
+		Number.isNaN(width) ||
+		Number.isNaN(height) ||
+		width <= 0 ||
+		height <= 0
+	) {
+		return null;
+	}
+
+	return { minX, minY, width, height };
+}
+
+function resolveFittedViewBox(
+	viewBox: string | undefined,
+	fitToSquare: boolean,
+): string | undefined {
+	if (!fitToSquare) {
+		return viewBox;
+	}
+
+	const parsed = parseViewBox(viewBox);
+
+	if (!parsed) {
+		return viewBox;
+	}
+
+	const side = Math.max(parsed.width, parsed.height);
+
+	if (parsed.width === parsed.height) {
+		return viewBox;
+	}
+
+	const nextMinX = parsed.minX - (side - parsed.width) / 2;
+	const nextMinY = parsed.minY - (side - parsed.height) / 2;
+
+	return `${nextMinX} ${nextMinY} ${side} ${side}`;
 }
 
 function resolveGradientPaint(
@@ -60,6 +143,7 @@ function resolveGradientPaint(
 
 export function GradientIcon({
 	className,
+	fitToSquare = true,
 	icon,
 	paint = "auto",
 	size = "100%",
@@ -77,6 +161,13 @@ export function GradientIcon({
 
 	const resolvedPaint = resolveGradientPaint(iconBaseElement.props.attr, paint);
 	const attr = iconBaseElement.props.attr;
+	const fittedViewBox = resolveFittedViewBox(attr?.viewBox, fitToSquare);
+	const parsedFittedViewBox = parseViewBox(fittedViewBox);
+	const gradientX1 = parsedFittedViewBox ? parsedFittedViewBox.minX : 0;
+	const gradientX2 = parsedFittedViewBox
+		? parsedFittedViewBox.minX + parsedFittedViewBox.width
+		: 1;
+	const gradientY = parsedFittedViewBox ? parsedFittedViewBox.minY : 0;
 
 	return (
 		<GradientIconRoot
@@ -97,6 +188,7 @@ export function GradientIcon({
 				}
 				focusable="false"
 				height={size}
+				preserveAspectRatio="xMidYMid meet"
 				stroke={
 					resolvedPaint === "fill"
 						? attr?.stroke
@@ -104,12 +196,20 @@ export function GradientIcon({
 							? "none"
 							: `url(#${gradientId})`
 				}
+				viewBox={fittedViewBox}
 				width={size}
 				xmlns="http://www.w3.org/2000/svg"
 			>
 				<title>{resolvedTitle}</title>
 				<defs>
-					<linearGradient id={gradientId} x1="0%" x2="100%" y1="0%" y2="100%">
+					<linearGradient
+						gradientUnits="userSpaceOnUse"
+						id={gradientId}
+						x1={gradientX1}
+						x2={gradientX2}
+						y1={gradientY}
+						y2={gradientY}
+					>
 						<stop offset="0%" stopColor="var(--color-ll-system-left)" />
 						<stop offset="100%" stopColor="var(--color-ll-system-right)" />
 					</linearGradient>
@@ -120,6 +220,45 @@ export function GradientIcon({
 					resolvedPaint,
 				)}
 			</svg>
+		</GradientIconRoot>
+	);
+}
+
+export function GradientIconCluster({
+	className,
+	iconClassName,
+	items,
+	itemClassName,
+	...props
+}: GradientIconClusterProps) {
+	return (
+		<GradientIconRoot
+			aria-hidden="true"
+			className={cn(
+				"grid h-full w-full grid-cols-2 grid-rows-2 place-items-center gap-[8%] p-[4%]",
+				className,
+			)}
+			{...props}
+		>
+			{items.map((item) => (
+				<span
+					key={item.title}
+					className={cn(
+						"ll-shadow-icon-tile grid aspect-square h-auto w-full max-w-full place-items-center self-center rounded-[26%] bg-ll-white",
+						itemClassName,
+					)}
+				>
+					<GradientIcon
+						className={cn("h-[56%] w-[56%]", iconClassName)}
+						icon={item.icon}
+						title={item.title}
+						{...(item.fitToSquare !== undefined
+							? { fitToSquare: item.fitToSquare }
+							: {})}
+						{...(item.paint !== undefined ? { paint: item.paint } : {})}
+					/>
+				</span>
+			))}
 		</GradientIconRoot>
 	);
 }
