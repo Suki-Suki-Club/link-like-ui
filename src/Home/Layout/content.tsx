@@ -1,9 +1,28 @@
 import {
 	type ButtonHTMLAttributes,
+	type CSSProperties,
 	type ReactNode,
 	useEffect,
 	useState,
 } from "react";
+import type {
+	GradientIconClusterItems,
+	GradientIconDefinition,
+} from "../../System/Icon";
+import {
+	SystemModal,
+	SystemModalBody,
+	SystemModalContent,
+	SystemModalTitle,
+} from "../../System/SystemModal";
+import {
+	homeMenuCloseAnimationDurationCssVar,
+	homeMenuCloseAnimationDurationMs,
+	homeMenuOpenAnimationDurationCssVar,
+	homeMenuOpenAnimationDurationMs,
+	homeMenuScrimInAnimationClass,
+	homeMenuScrimOutAnimationClass,
+} from "./animation";
 import { HomeLayoutDock } from "./Dock/content";
 import { HomeLayoutHeader } from "./Header/content";
 import { formatLocalClock } from "./Header/helpers";
@@ -13,17 +32,40 @@ import {
 	type LayoutBannerDefinition,
 	type LayoutTileDefinition,
 } from "./Sheet/content";
+import { LayoutQuickTile } from "./Sheet/quickTile";
+import { LayoutGrid } from "./Sheet/structure";
 import {
 	LayoutBackground,
 	LayoutRoot,
 	LayoutScenery,
 	LayoutScrim,
 } from "./structure";
+import { useHomeLayoutState } from "./useHomeLayoutState";
 
 export interface LayoutAction {
 	ariaLabel: string;
 	label: string;
 	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+}
+
+export type LayoutTileIllustrationDefinition =
+	| {
+			icon: GradientIconDefinition;
+			kind: "single";
+	  }
+	| {
+			items: GradientIconClusterItems;
+			kind: "cluster";
+	  };
+
+interface LayoutTileSubmenuDefinition {
+	items: readonly {
+		icon: GradientIconDefinition;
+		id: string;
+		label: string;
+		onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+	}[];
+	title: string;
 }
 
 export type LayoutVariant = "home";
@@ -34,96 +76,107 @@ export type {
 
 export interface LayoutProps {
 	actions?: LayoutAction[];
-	backAction?: LayoutAction;
 	centerContent?: ReactNode;
-	children?: ReactNode;
 	dateLabel?: string;
 	defaultMenuOpen?: boolean;
+	hasMenuNotification?: boolean;
 	homeAction?: LayoutAction;
 	menuTiles: LayoutTileDefinition[];
-	sheetBottomContent?: ReactNode;
 	topBanners: LayoutBannerDefinition[];
 	rightContent?: ReactNode;
 	statusLabel?: string;
 	timeLabel?: string;
 	variant?: LayoutVariant;
+
+	children?: ReactNode;
+	sheetBottomContent?: ReactNode;
+	backAction?: LayoutAction;
 }
 
-const layoutMenuAnimationDurationMs = 220;
+export interface HomeScreenBannerInput {
+	alt: string;
+	badge?: string;
+	id?: string;
+	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+	src: string;
+}
+
+export interface HomeScreenMenuItemInput {
+	badge?: string;
+	colSpan?: LayoutTileDefinition["colSpan"];
+	id?: string;
+	illustration?: LayoutTileIllustrationDefinition;
+	label: string;
+	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+	rowSpan?: LayoutTileDefinition["rowSpan"];
+	submenu?: LayoutTileSubmenuDefinition;
+}
+
+export interface HomeScreenProps
+	extends Omit<
+		LayoutProps,
+		"hasMenuNotification" | "menuTiles" | "topBanners" | "variant"
+	> {
+	banners: HomeScreenBannerInput[];
+	menuItems: HomeScreenMenuItemInput[];
+	menuNotificationCount?: number;
+}
+
+function resolveBannerId(banner: HomeScreenBannerInput, index: number) {
+	return banner.id ?? `banner-${index + 1}`;
+}
+
+function resolveMenuItemId(menuItem: HomeScreenMenuItemInput, index: number) {
+	return menuItem.id ?? `tile-${index + 1}`;
+}
+
+function toLayoutBannerDefinitions(
+	banners: HomeScreenBannerInput[],
+): LayoutBannerDefinition[] {
+	return banners.map((banner, index) => ({
+		...banner,
+		id: resolveBannerId(banner, index),
+	}));
+}
+
+function toLayoutTileDefinitions(
+	menuItems: HomeScreenMenuItemInput[],
+): LayoutTileDefinition[] {
+	return menuItems.map((menuItem, index) => ({
+		...menuItem,
+		colSpan: menuItem.colSpan ?? 1,
+		id: resolveMenuItemId(menuItem, index),
+		rowSpan: menuItem.rowSpan ?? 1,
+	}));
+}
 
 function HomeLayout({
-	backAction = {
-		ariaLabel: "Back",
-		label: "Back",
-		onClick: () => {
-			if (globalThis.history.length > 1) {
-				globalThis.history.back();
-			}
-		},
-	},
 	centerContent,
-	children,
 	defaultMenuOpen = false,
+	hasMenuNotification = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
 	menuTiles,
 	rightContent,
-	sheetBottomContent,
 	topBanners,
 }: Omit<LayoutProps, "variant">) {
-	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(defaultMenuOpen);
+	const {
+		activeSubmenuTileId,
+		back,
+		canGoBack,
+		closeMenu,
+		isMenuOpen,
+		isSubmenuModalOpen,
+		openSubmenu,
+		setSubmenuModalOpen,
+		toggleMenu,
+	} = useHomeLayoutState(defaultMenuOpen);
 	const [isMenuVisible, setIsMenuVisible] = useState<boolean>(defaultMenuOpen);
 	const [clock, setClock] = useState(() => formatLocalClock(new Date()));
 	const battery = useBatteryState();
-
-	const closeMenu = () => {
-		setIsMenuOpen(false);
-	};
-
-	const createNavigationHandler = (
-		handler?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"],
-	) => {
-		if (!handler) {
-			return undefined;
-		}
-
-		return (event: Parameters<NonNullable<typeof handler>>[0]) => {
-			handler(event);
-			if (!event.defaultPrevented) {
-				closeMenu();
-			}
-		};
-	};
-
-	const handleBackButtonClick: ButtonHTMLAttributes<HTMLButtonElement>["onClick"] =
-		(event) => {
-			if (isMenuOpen) {
-				event.preventDefault();
-				closeMenu();
-				return;
-			}
-
-			backAction.onClick?.(event);
-		};
-
-	const dockBackAction = {
-		...backAction,
-		onClick: handleBackButtonClick,
-	};
-
-	const dockHomeAction = {
-		...homeAction,
-		onClick: createNavigationHandler(homeAction.onClick),
-	};
-
-	const closableMenuTiles = menuTiles.map((tile) => ({
-		...tile,
-		onClick: createNavigationHandler(tile.onClick),
-	}));
-
-	const closableTopBanners = topBanners.map((banner) => ({
-		...banner,
-		onClick: createNavigationHandler(banner.onClick),
-	}));
+	const layoutRootStyle = {
+		[homeMenuOpenAnimationDurationCssVar]: `${homeMenuOpenAnimationDurationMs}ms`,
+		[homeMenuCloseAnimationDurationCssVar]: `${homeMenuCloseAnimationDurationMs}ms`,
+	} as CSSProperties;
 
 	useEffect(() => {
 		const timerId = globalThis.setInterval(() => {
@@ -143,33 +196,20 @@ function HomeLayout({
 
 		const timeoutId = globalThis.setTimeout(() => {
 			setIsMenuVisible(false);
-		}, layoutMenuAnimationDurationMs);
+		}, homeMenuCloseAnimationDurationMs);
 
 		return () => {
 			globalThis.clearTimeout(timeoutId);
 		};
 	}, [isMenuOpen]);
 
-	useEffect(() => {
-		if (!isMenuOpen) {
-			return;
-		}
-
-		const handleKeyDown = (event: KeyboardEvent) => {
-			if (event.key === "Escape") {
-				setIsMenuOpen(false);
-			}
-		};
-
-		globalThis.addEventListener("keydown", handleKeyDown);
-
-		return () => {
-			globalThis.removeEventListener("keydown", handleKeyDown);
-		};
-	}, [isMenuOpen]);
+	const activeSubmenuTile =
+		activeSubmenuTileId === null
+			? null
+			: (menuTiles.find((tile) => tile.id === activeSubmenuTileId) ?? null);
 
 	return (
-		<LayoutRoot>
+		<LayoutRoot style={layoutRootStyle}>
 			<LayoutBackground />
 			<LayoutScenery aria-hidden="true">
 				<div className="absolute inset-0 bg-linear-to-b from-ll-system-left/10 via-ll-white/6 to-ll-orange/18" />
@@ -178,21 +218,15 @@ function HomeLayout({
 				battery={battery}
 				centerContent={centerContent}
 				clock={clock}
-				hideClock={children != null}
 				rightContent={rightContent}
 			/>
-			{children != null && (
-				<div className="absolute inset-x-0 top-[3.05rem] bottom-0 overflow-auto z-1 bg-ll-page-bg pb-(--ll-home-dock-height)">
-					{children}
-				</div>
-			)}
 			{isMenuVisible ? (
 				<LayoutScrim
 					aria-label="Close menu"
 					className={
 						isMenuOpen
-							? "animate-[llHomeMenuScrimIn_220ms_ease-out_both]"
-							: "animate-[llHomeMenuScrimOut_220ms_ease-out_both]"
+							? homeMenuScrimInAnimationClass
+							: homeMenuScrimOutAnimationClass
 					}
 					onClick={() => {
 						closeMenu();
@@ -200,18 +234,62 @@ function HomeLayout({
 				/>
 			) : null}
 			<HomeLayoutSheet
-				bottomContent={sheetBottomContent}
 				isMenuOpen={isMenuOpen}
 				isMenuVisible={isMenuVisible}
-				menuTiles={closableMenuTiles}
-				topBanners={closableTopBanners}
+				menuTiles={menuTiles}
+				onOpenSubmenu={(tileId) => {
+					openSubmenu(tileId);
+				}}
+				topBanners={topBanners}
 			/>
+			{activeSubmenuTile?.submenu ? (
+				<SystemModal
+					open={isSubmenuModalOpen}
+					onOpenChange={(nextOpen) => {
+						setSubmenuModalOpen(nextOpen);
+					}}
+				>
+					<SystemModalContent
+						aria-describedby={undefined}
+						bodyClassName="ll-glass-surface"
+						className="[--ll-home-tile-gap:clamp(0.54rem,2.15vw,1.5rem)] [--ll-submenu-padding:2rem] [--ll-submenu-tile-size:4.35rem] w-[calc((var(--ll-submenu-tile-size)*2)+var(--ll-home-tile-gap)+(var(--ll-submenu-padding)*2))] max-w-none"
+						width="sm"
+					>
+						<SystemModalBody padding="none">
+							<SystemModalTitle className="sr-only">
+								{activeSubmenuTile.submenu.title}
+							</SystemModalTitle>
+							<LayoutGrid
+								columns={2}
+								className="grid-cols-[repeat(2,var(--ll-submenu-tile-size))] w-fit p-(--ll-submenu-padding)"
+							>
+								{activeSubmenuTile.submenu.items.map((item) => (
+									<LayoutQuickTile
+										key={item.id}
+										className="h-(--ll-submenu-tile-size) w-(--ll-submenu-tile-size)"
+										illustration={{
+											icon: item.icon,
+											kind: "single",
+										}}
+										label={item.label}
+										onClick={item.onClick}
+									/>
+								))}
+							</LayoutGrid>
+						</SystemModalBody>
+					</SystemModalContent>
+				</SystemModal>
+			) : null}
 			<HomeLayoutDock
-				backAction={dockBackAction}
-				homeAction={dockHomeAction}
+				canGoBack={canGoBack}
+				homeAction={homeAction}
+				hasMenuNotification={hasMenuNotification}
 				isMenuOpen={isMenuOpen}
+				onBack={() => {
+					back();
+				}}
 				onToggleMenu={() => {
-					setIsMenuOpen((currentValue) => !currentValue);
+					toggleMenu();
 				}}
 			/>
 		</LayoutRoot>
@@ -224,4 +302,21 @@ export function Layout(props: LayoutProps) {
 	}
 
 	return null;
+}
+
+export function HomeScreen({
+	banners,
+	menuItems,
+	menuNotificationCount = 0,
+	...props
+}: HomeScreenProps) {
+	return (
+		<Layout
+			{...props}
+			hasMenuNotification={menuNotificationCount > 0}
+			menuTiles={toLayoutTileDefinitions(menuItems)}
+			topBanners={toLayoutBannerDefinitions(banners)}
+			variant="home"
+		/>
+	);
 }

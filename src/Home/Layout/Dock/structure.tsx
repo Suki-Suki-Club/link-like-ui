@@ -24,7 +24,7 @@ export function LayoutDockSurface({
 	return (
 		<div
 			className={cn(
-				"grid h-full grid-cols-3 overflow-hidden rounded-t-[1.15rem] border border-b-0 border-ll-white/78 bg-ll-white shadow-[0_8px_18px_color-mix(in_srgb,var(--color-ll-gray)_14%,transparent)]",
+				"ll-shadow-float grid grid-cols-3 overflow-hidden rounded-t-[1.15rem] border border-b-0 border-ll-white/78 bg-ll-white",
 				className,
 			)}
 			{...props}
@@ -39,7 +39,7 @@ export function LayoutDockButton({
 	return (
 		<LayoutButtonBase
 			className={cn(
-				"pointer-events-auto relative flex h-15 appearance-none items-center justify-center p-0 leading-none text-[2rem] text-ll-label transition-colors hover:text-ll-system-right focus-visible:outline-3 focus-visible:outline-ll-label [&>svg]:mx-auto [&>svg]:my-auto [&>svg]:block [&>svg]:shrink-0",
+				"pointer-events-auto relative flex h-16 items-center justify-center text-[2.22rem] text-ll-label transition-colors hover:text-ll-system-right focus-visible:outline-3 focus-visible:outline-ll-label",
 				className,
 			)}
 			{...props}
@@ -84,7 +84,7 @@ export function LayoutDockGlyphLine({
 	return (
 		<span
 			className={cn(
-				"absolute top-1/2 left-1/2 block h-[0.1em] w-[1.04em] -translate-x-1/2 -translate-y-1/2 rounded-full bg-linear-to-r from-ll-system-left to-ll-system-right transition-transform duration-300 ease-out",
+				"ll-bg-system-gradient absolute top-1/2 left-1/2 block h-[0.1em] w-[1.04em] -translate-x-1/2 -translate-y-1/2 rounded-full transition-transform duration-300 ease-out",
 				className,
 			)}
 			{...props}
