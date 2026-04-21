@@ -2,11 +2,16 @@ pre-commit:
   parallel: false
   commands:
     tailwind-canonical:
+      glob: "src/**/*.{ts,tsx}"
       run: pnpm run fix:tailwind-canonical
-      stage_fixed: true
+      # stage_fixed disabled: script rewrites all tracked files (not {staged_files})
+      # and corrupts unrelated ones. Re-enable once script accepts a file-list arg.
+      stage_fixed: false
     biome:
+      glob: "*.{ts,tsx,js,jsx,json}"
       run: pnpm run biome:check
       stage_fixed: true
     knip:
+      glob: "src/**/*.{ts,tsx}"
       run: pnpm run knip
       stage_fixed: true

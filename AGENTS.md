@@ -1,5 +1,7 @@
 # ルール
 
+> **Fork Policy (MUST READ FIRST)**: This repository is a fork consumed as a git submodule by `kakeru-ikeda/link-like-blooming-network`. Before adding ANY patch, read [`FORK_POLICY.md`](./FORK_POLICY.md) — it defines branch naming, change classification (when to patch this fork vs the parent), and the upstream-sync workflow. Do NOT push PRs to upstream `AkaakuHub/link-like-ui`.
+
 - 指示通り、元の画像をベースにして、ピクセルパーフェクトなUI再現を行うこと
 - そのためにvision toolを使用し、もし他のAIツールが必要ならば私に訪ねて
 - 自分で勝手に判断せず、不明点はすぐに私に聞いて下さい

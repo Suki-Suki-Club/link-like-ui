@@ -1,0 +1,149 @@
+name: Upstream Sync
+
+# Sync from AkaakuHub/link-like-ui main into this fork's main.
+# - Schedule: weekly Mon 09:00 JST (00:00 UTC)
+# - Manual:   workflow_dispatch
+# Behavior:
+#   1. Fetch upstream/main, merge into a fresh branch `merge/upstream-<short>-<date>`.
+#   2. If merge succeeds with no conflicts -> open a PR labeled `upstream-sync`.
+#   3. If merge has conflicts             -> open an issue labeled `upstream-sync,conflict` and abort.
+#
+# Why a branch+PR (instead of pushing to main):
+#   - All upstream merges go through review so blooming-network parent can validate
+#     `npm run build` + playwright before bumping the submodule pointer.
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # Mon 00:00 UTC = Mon 09:00 JST
+  workflow_dispatch:
+    inputs:
+      upstream_ref:
+        description: "Upstream ref to merge (default: main)"
+        required: false
+        default: "main"
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+env:
+  UPSTREAM_REPO: AkaakuHub/link-like-ui
+  UPSTREAM_REF: ${{ github.event.inputs.upstream_ref || 'main' }}
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fork (full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote and fetch
+        run: |
+          git remote add upstream "https://github.com/${UPSTREAM_REPO}.git"
+          git fetch upstream "${UPSTREAM_REF}" --no-tags
+
+      - name: Compute upstream metadata
+        id: meta
+        run: |
+          UPSTREAM_SHA=$(git rev-parse "upstream/${UPSTREAM_REF}")
+          UPSTREAM_SHORT=$(git rev-parse --short=7 "upstream/${UPSTREAM_REF}")
+          DATE=$(date -u +%Y%m%d)
+          BRANCH="merge/upstream-${UPSTREAM_SHORT}-${DATE}"
+          echo "upstream_sha=${UPSTREAM_SHA}"     >> "$GITHUB_OUTPUT"
+          echo "upstream_short=${UPSTREAM_SHORT}" >> "$GITHUB_OUTPUT"
+          echo "branch=${BRANCH}"                 >> "$GITHUB_OUTPUT"
+
+      - name: Skip if already merged
+        id: gate
+        run: |
+          if git merge-base --is-ancestor "${{ steps.meta.outputs.upstream_sha }}" HEAD; then
+            echo "Upstream ${{ steps.meta.outputs.upstream_short }} is already in main. Nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip if branch already exists on remote
+        if: steps.gate.outputs.skip != 'true'
+        id: branch_gate
+        run: |
+          if git ls-remote --exit-code --heads origin "${{ steps.meta.outputs.branch }}" >/dev/null 2>&1; then
+            echo "Branch ${{ steps.meta.outputs.branch }} already exists on origin. Skipping."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create merge branch and attempt merge
+        if: steps.gate.outputs.skip != 'true' && steps.branch_gate.outputs.skip != 'true'
+        id: merge
+        run: |
+          set +e
+          git checkout -b "${{ steps.meta.outputs.branch }}"
+          git merge --no-ff --no-edit \
+            -m "Merge upstream ${UPSTREAM_REPO}/${UPSTREAM_REF} (${{ steps.meta.outputs.upstream_short }})" \
+            "upstream/${UPSTREAM_REF}"
+          STATUS=$?
+          if [ $STATUS -ne 0 ]; then
+            echo "conflict=true" >> "$GITHUB_OUTPUT"
+            CONFLICTS=$(git diff --name-only --diff-filter=U | tr '\n' ' ')
+            echo "conflicts=${CONFLICTS}" >> "$GITHUB_OUTPUT"
+            git merge --abort || true
+            exit 0
+          fi
+          echo "conflict=false" >> "$GITHUB_OUTPUT"
+
+      - name: Push merge branch
+        if: steps.gate.outputs.skip != 'true' && steps.branch_gate.outputs.skip != 'true' && steps.merge.outputs.conflict == 'false'
+        run: git push origin "${{ steps.meta.outputs.branch }}"
+
+      - name: Open PR
+        if: steps.gate.outputs.skip != 'true' && steps.branch_gate.outputs.skip != 'true' && steps.merge.outputs.conflict == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "${{ steps.meta.outputs.branch }}" \
+            --title "chore: sync upstream ${UPSTREAM_REPO}/${UPSTREAM_REF} (${{ steps.meta.outputs.upstream_short }})" \
+            --body "Automated sync from \`${UPSTREAM_REPO}\` \`${UPSTREAM_REF}\` at \`${{ steps.meta.outputs.upstream_sha }}\`.
+
+**Checklist before merging:**
+- [ ] Run \`pnpm install && pnpm run build\` locally and confirm \`dist/\` is healthy.
+- [ ] In parent \`link-like-blooming-network\`: bump submodule pointer, run \`npm run build\`, verify with playwright.
+- [ ] Confirm fork-only patches still apply (see \`FORK_POLICY.md\`).
+
+This PR was created by \`.github/workflows/upstream-sync.yml\`." \
+            --label upstream-sync || true
+
+      - name: Open conflict issue
+        if: steps.gate.outputs.skip != 'true' && steps.branch_gate.outputs.skip != 'true' && steps.merge.outputs.conflict == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Upstream sync conflict: ${UPSTREAM_REPO}/${UPSTREAM_REF}@${{ steps.meta.outputs.upstream_short }}" \
+            --label "upstream-sync,conflict" \
+            --body "Automated upstream sync hit merge conflicts and was aborted.
+
+- **Upstream**: \`${UPSTREAM_REPO}/${UPSTREAM_REF}\` @ \`${{ steps.meta.outputs.upstream_sha }}\`
+- **Conflicting paths**: \`${{ steps.merge.outputs.conflicts }}\`
+
+Resolve manually:
+\`\`\`bash
+git fetch upstream ${UPSTREAM_REF}
+git checkout -b ${{ steps.meta.outputs.branch }} main
+git merge upstream/${UPSTREAM_REF}
+# resolve conflicts, commit, push, open PR
+\`\`\`
+
+Run \`Upstream Sync\` workflow again after resolution if needed." || true
