@@ -119,7 +119,8 @@ If a `blooming-*` patch breaks due to upstream changes, fix it in a separate `fi
 | ------------- | ----------------------------------- | ---------------------------------------------------------------- | --------- |
 | `ecee0cc`     | `fix/home-layout-props-restore`     | Restore `children` / `sheetBottomContent` on `HomeLayout`        | Permanent |
 | `00b6725`     | `fix/font-assets-extralight`        | Copy `Poppins-ExtraLight.ttf` to `dist/assets/fonts/`            | Permanent |
-| _pending_     | `feat/blooming-menu-auto-close-and-back-override` | Auto-close menu on tile select; add `onBack` prop on `Layout` for parent-controlled back (browser back, etc.) | Permanent |
+| `c214f44`     | `feat/blooming-menu-auto-close-and-back-override` | Auto-close menu on tile select; add `onBack` prop on `Layout` for parent-controlled back (browser back, etc.) | Permanent |
+| _pending_     | `feat/blooming-home-button-closes-menu` | Dock home button auto-closes menu before invoking `homeAction.onClick` | Permanent |
 
 ## Non-goals
 

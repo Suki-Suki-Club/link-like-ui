@@ -295,7 +295,13 @@ function HomeLayout({
 			) : null}
 			<HomeLayoutDock
 				canGoBack={canGoBack || onBack != null}
-				homeAction={homeAction}
+				homeAction={{
+					...homeAction,
+					onClick: (event) => {
+						closeMenu();
+						homeAction.onClick?.(event);
+					},
+				}}
 				hasMenuNotification={hasMenuNotification}
 				isMenuOpen={isMenuOpen}
 				onBack={() => {
