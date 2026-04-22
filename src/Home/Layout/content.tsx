@@ -82,6 +82,7 @@ export interface LayoutProps {
 	hasMenuNotification?: boolean;
 	homeAction?: LayoutAction;
 	menuTiles: LayoutTileDefinition[];
+	onBack?: () => void;
 	topBanners: LayoutBannerDefinition[];
 	rightContent?: ReactNode;
 	statusLabel?: string;
@@ -156,6 +157,7 @@ function HomeLayout({
 	hasMenuNotification = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
 	menuTiles,
+	onBack,
 	rightContent,
 	sheetBottomContent,
 	topBanners,
@@ -248,6 +250,9 @@ function HomeLayout({
 				onOpenSubmenu={(tileId) => {
 					openSubmenu(tileId);
 				}}
+				onTileSelected={() => {
+					closeMenu();
+				}}
 				topBanners={topBanners}
 			/>
 			{activeSubmenuTile?.submenu ? (
@@ -289,12 +294,17 @@ function HomeLayout({
 				</SystemModal>
 			) : null}
 			<HomeLayoutDock
-				canGoBack={canGoBack}
+				canGoBack={canGoBack || onBack != null}
 				homeAction={homeAction}
 				hasMenuNotification={hasMenuNotification}
 				isMenuOpen={isMenuOpen}
 				onBack={() => {
-					back();
+					if (canGoBack) {
+						back();
+						return;
+					}
+
+					onBack?.();
 				}}
 				onToggleMenu={() => {
 					toggleMenu();

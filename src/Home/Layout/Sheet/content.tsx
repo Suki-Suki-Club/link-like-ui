@@ -55,6 +55,7 @@ interface HomeLayoutSheetProps {
 	isMenuVisible: boolean;
 	menuTiles: LayoutTileDefinition[];
 	onOpenSubmenu: (tileId: string) => void;
+	onTileSelected?: (tile: LayoutTileDefinition) => void;
 	topBanners: LayoutBannerDefinition[];
 }
 
@@ -64,6 +65,7 @@ export function HomeLayoutSheet({
 	isMenuVisible,
 	menuTiles,
 	onOpenSubmenu,
+	onTileSelected,
 	topBanners,
 }: HomeLayoutSheetProps) {
 	if (!isMenuVisible) {
@@ -131,6 +133,7 @@ export function HomeLayoutSheet({
 									}
 
 									tile.onClick?.(event);
+									onTileSelected?.(tile);
 								}}
 							/>
 						))}
