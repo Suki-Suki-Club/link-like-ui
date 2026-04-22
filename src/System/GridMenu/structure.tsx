@@ -25,7 +25,7 @@ export function GridMenuItem({
 	return (
 		<GridMenuItemBase
 			className={cn(
-				"flex items-center justify-between rounded-[0.75rem] bg-ll-white p-4 shadow-[0_1px_8px_color-mix(in_srgb,var(--color-ll-card-shadow)_50%,transparent)] transition-[filter] duration-150 ease-out hover:brightness-95",
+				"flex items-center justify-between rounded-xl bg-ll-white p-4 shadow-[0_1px_8px_color-mix(in_srgb,var(--color-ll-card-shadow)_50%,transparent)] transition-[filter] duration-150 ease-out hover:brightness-95",
 				className,
 			)}
 			{...props}

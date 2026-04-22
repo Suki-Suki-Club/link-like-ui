@@ -9,7 +9,7 @@ export function Card({
 	return (
 		<CardBase
 			className={cn(
-				"rounded-[0.75rem] bg-ll-white p-4 shadow-[0_1px_8px_color-mix(in_srgb,var(--color-ll-card-shadow)_50%,transparent)]",
+				"rounded-xl bg-ll-white p-4 shadow-[0_1px_8px_color-mix(in_srgb,var(--color-ll-card-shadow)_50%,transparent)]",
 				className,
 			)}
 			{...props}

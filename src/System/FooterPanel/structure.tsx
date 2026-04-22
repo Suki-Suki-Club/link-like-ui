@@ -92,7 +92,7 @@ export function FooterPanelBar({
 	return (
 		<FooterPanelBarBase
 			className={cn(
-				"relative grid min-h-[4.9rem] w-full overflow-hidden rounded-t-[1.5rem] border border-[color:color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] bg-ll-white shadow-[0_0.4rem_1.15rem_color-mix(in_srgb,var(--color-ll-card-shadow)_52%,transparent)]",
+				"relative grid min-h-[4.9rem] w-full overflow-hidden rounded-t-3xl border border-[color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] bg-ll-white shadow-[0_0.4rem_1.15rem_color-mix(in_srgb,var(--color-ll-card-shadow)_52%,transparent)]",
 				className,
 			)}
 			style={{
@@ -122,7 +122,7 @@ export function FooterPanelItem({
 	return (
 		<FooterPanelButtonBase
 			className={cn(
-				"relative flex min-h-[4.9rem] items-center justify-center gap-1.5 border-r border-[color:color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] px-3 py-3 text-ll-label transition-[filter,color] duration-150 ease-out last:border-r-0 hover:brightness-95 focus-visible:z-[1] focus-visible:outline-3 focus-visible:outline-ll-label disabled:text-ll-disabled disabled:hover:brightness-100",
+				"relative flex min-h-[4.9rem] items-center justify-center gap-1.5 border-r border-[color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] px-3 py-3 text-ll-label transition-[filter,color] duration-150 ease-out last:border-r-0 hover:brightness-95 focus-visible:z-1 focus-visible:outline-3 focus-visible:outline-ll-label disabled:text-ll-disabled disabled:hover:brightness-100",
 				active && "text-ll-system-right",
 				className,
 			)}
@@ -171,7 +171,7 @@ export function FooterPanelNotificationDot({
 	return (
 		<span
 			className={cn(
-				"absolute top-[0.7rem] right-[1rem] h-3.5 w-3.5 rounded-full border-[0.18rem] border-ll-white bg-ll-red shadow-[0_0.2rem_0.45rem_color-mix(in_srgb,var(--color-ll-red)_35%,transparent)]",
+				"absolute top-[0.7rem] right-4 h-3.5 w-3.5 rounded-full border-[0.18rem] border-ll-white bg-ll-red shadow-[0_0.2rem_0.45rem_color-mix(in_srgb,var(--color-ll-red)_35%,transparent)]",
 				className,
 			)}
 			{...props}
@@ -202,7 +202,7 @@ export function FooterPanelCenterTrigger({
 			aria-expanded={open}
 			aria-haspopup="menu"
 			className={cn(
-				"relative flex min-h-[4.9rem] items-center justify-center gap-1.5 border-r border-[color:color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] px-3 py-3 text-ll-label transition-[filter,color] duration-150 ease-out last:border-r-0 hover:brightness-95 focus-visible:z-[1] focus-visible:outline-3 focus-visible:outline-ll-label",
+				"relative flex min-h-[4.9rem] items-center justify-center gap-1.5 border-r border-[color-mix(in_srgb,var(--color-ll-avatar-border)_72%,transparent)] px-3 py-3 text-ll-label transition-[filter,color] duration-150 ease-out last:border-r-0 hover:brightness-95 focus-visible:z-1 focus-visible:outline-3 focus-visible:outline-ll-label",
 				open && "text-ll-system-right",
 				className,
 			)}
@@ -247,7 +247,7 @@ export function FooterPanelMenu({
 			role="menu"
 			{...props}
 		>
-			<div className="pointer-events-auto w-full max-w-[22rem] rounded-[1.5rem] border border-[color:color-mix(in_srgb,var(--color-ll-avatar-border)_76%,transparent)] bg-[color:color-mix(in_srgb,var(--color-ll-white)_94%,transparent)] p-3 shadow-[0_0.75rem_1.6rem_color-mix(in_srgb,var(--color-ll-card-shadow)_42%,transparent)] backdrop-blur-[6px]">
+			<div className="pointer-events-auto w-full max-w-88 rounded-3xl border border-[color-mix(in_srgb,var(--color-ll-avatar-border)_76%,transparent)] bg-[color-mix(in_srgb,var(--color-ll-white)_94%,transparent)] p-3 shadow-[0_0.75rem_1.6rem_color-mix(in_srgb,var(--color-ll-card-shadow)_42%,transparent)] backdrop-blur-[6px]">
 				{children}
 			</div>
 		</FooterPanelMenuBase>
@@ -294,7 +294,7 @@ export function FooterPanelMenuItem({
 	return (
 		<FooterPanelButtonBase
 			className={cn(
-				"relative flex min-h-[5.55rem] flex-col items-center justify-center gap-1.5 rounded-[1rem] bg-ll-white px-2 py-2 text-ll-label shadow-[0_0.35rem_0.85rem_color-mix(in_srgb,var(--color-ll-card-shadow)_35%,transparent)] transition-[filter,transform] duration-150 ease-out hover:-translate-y-[1px] hover:brightness-95 focus-visible:outline-3 focus-visible:outline-ll-label disabled:text-ll-disabled disabled:hover:translate-y-0 disabled:hover:brightness-100",
+				"relative flex min-h-[5.55rem] flex-col items-center justify-center gap-1.5 rounded-2xl bg-ll-white px-2 py-2 text-ll-label shadow-[0_0.35rem_0.85rem_color-mix(in_srgb,var(--color-ll-card-shadow)_35%,transparent)] transition-[filter,transform] duration-150 ease-out hover:-translate-y-px hover:brightness-95 focus-visible:outline-3 focus-visible:outline-ll-label disabled:text-ll-disabled disabled:hover:translate-y-0 disabled:hover:brightness-100",
 				className,
 			)}
 			onClick={(event) => {

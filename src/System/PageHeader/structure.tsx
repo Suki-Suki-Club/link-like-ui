@@ -38,7 +38,7 @@ export function PageHeaderTitle({
 	return (
 		<h1
 			className={cn(
-				"relative z-[1] text-[1rem] font-bold tracking-[0.08em] text-ll-white",
+				"relative z-1 text-[1rem] font-bold tracking-[0.08em] text-ll-white",
 				className,
 			)}
 			{...props}
