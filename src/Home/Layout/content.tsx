@@ -36,16 +36,41 @@ import { LayoutQuickTile } from "./Sheet/quickTile";
 import { LayoutGrid } from "./Sheet/structure";
 import {
 	LayoutBackground,
+	LayoutCustomBackground,
+	type LayoutCustomBackgroundProps,
 	LayoutRoot,
 	LayoutScenery,
 	LayoutScrim,
 } from "./structure";
 import { useHomeLayoutState } from "./useHomeLayoutState";
 
+export type { LayoutCustomBackgroundProps } from "./structure";
+
 export interface LayoutAction {
 	ariaLabel: string;
 	label: string;
 	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
+}
+
+export interface LayoutProps {
+	actions?: LayoutAction[];
+	centerContent?: ReactNode;
+	customBackground?: LayoutCustomBackgroundProps | null;
+	dateLabel?: string;
+	defaultMenuOpen?: boolean;
+	hasMenuNotification?: boolean;
+	homeAction?: LayoutAction;
+	menuTiles: LayoutTileDefinition[];
+	onBack?: () => void;
+	showClock?: boolean;
+	topBanners: LayoutBannerDefinition[];
+	rightContent?: ReactNode;
+	statusLabel?: string;
+	timeLabel?: string;
+	variant?: LayoutVariant;
+
+	children?: ReactNode;
+	sheetBottomContent?: ReactNode;
 }
 
 export type LayoutTileIllustrationDefinition =
@@ -153,12 +178,14 @@ function toLayoutTileDefinitions(
 function HomeLayout({
 	centerContent,
 	children,
+	customBackground,
 	defaultMenuOpen = false,
 	hasMenuNotification = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
 	menuTiles,
 	onBack,
 	rightContent,
+	showClock,
 	sheetBottomContent,
 	topBanners,
 }: Omit<LayoutProps, "variant">) {
@@ -213,15 +240,24 @@ function HomeLayout({
 
 	return (
 		<LayoutRoot style={layoutRootStyle}>
-			<LayoutBackground />
-			<LayoutScenery aria-hidden="true">
-				<div className="absolute inset-0 bg-linear-to-b from-ll-system-left/10 via-ll-white/6 to-ll-orange/18" />
-			</LayoutScenery>
+			{customBackground ? (
+				<>
+					<LayoutCustomBackground {...customBackground} />
+					<div className="absolute inset-0 z-0 bg-black/20" />
+				</>
+			) : (
+				<>
+					<LayoutBackground />
+					<LayoutScenery aria-hidden="true">
+						<div className="absolute inset-0 bg-linear-to-b from-ll-system-left/10 via-ll-white/6 to-ll-orange/18" />
+					</LayoutScenery>
+				</>
+			)}
 			<HomeLayoutHeader
 				battery={battery}
 				centerContent={centerContent}
 				clock={clock}
-				hideClock={children != null}
+				hideClock={showClock === false || children != null}
 				rightContent={rightContent}
 			/>
 			{children != null && (

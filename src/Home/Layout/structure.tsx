@@ -52,6 +52,39 @@ export function LayoutScenery({
 	);
 }
 
+export interface LayoutCustomBackgroundProps {
+	src: string;
+	type: "image" | "video";
+}
+
+export function LayoutCustomBackground({
+	src,
+	type,
+}: LayoutCustomBackgroundProps) {
+	if (type === "video") {
+		return (
+			<div className="absolute inset-0 z-0">
+				<video
+					autoPlay
+					loop
+					muted
+					playsInline
+					preload="none"
+					className="h-full w-full object-cover"
+					src={src}
+				/>
+			</div>
+		);
+	}
+
+	return (
+		<div
+			className="absolute inset-0 z-0 bg-cover bg-center"
+			style={{ backgroundImage: `url(${src})` }}
+		/>
+	);
+}
+
 export function LayoutScrim({
 	className,
 	...props
