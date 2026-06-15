@@ -29,12 +29,12 @@ export interface LayoutBannerDefinition {
 
 export interface LayoutTileDefinition {
 	badge?: string;
-	colSpan: LayoutTileColumnSpan;
+	colSpan?: LayoutTileColumnSpan;
 	id: string;
 	illustration?: LayoutTileIllustrationDefinition;
 	label: string;
 	onClick?: ButtonHTMLAttributes<HTMLButtonElement>["onClick"];
-	rowSpan: LayoutTileRowSpan;
+	rowSpan?: LayoutTileRowSpan;
 	submenu?: LayoutTileSubmenuDefinition;
 
 	icon?: ReactNode;
@@ -108,10 +108,10 @@ export function HomeLayoutSheet({
 						{menuTiles.map((tile) => (
 							<LayoutQuickTile
 								key={tile.id}
-								colSpan={columns === 3 ? 1 : tile.colSpan}
+								colSpan={columns === 3 ? 1 : (tile.colSpan ?? 1)}
 								hideLabel={tile.illustration?.kind === "cluster"}
 								label={tile.label}
-								rowSpan={tile.rowSpan}
+								rowSpan={tile.rowSpan ?? 1}
 								{...(tile.badge ? { badge: tile.badge } : {})}
 								{...(tile.illustration?.kind === "cluster"
 									? {
