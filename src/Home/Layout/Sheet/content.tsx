@@ -8,6 +8,7 @@ import type { LayoutTileIllustrationDefinition } from "../content";
 import { LayoutQuickTile } from "./quickTile";
 import {
 	LayoutGrid,
+	type LayoutGridColumns,
 	LayoutImageBanner,
 	LayoutImageBannerMedia,
 	LayoutSheet,
@@ -15,6 +16,8 @@ import {
 	type LayoutTileColumnSpan,
 	type LayoutTileRowSpan,
 } from "./structure";
+
+export type { LayoutGridColumns } from "./structure";
 
 export interface LayoutBannerDefinition {
 	alt: string;
@@ -51,6 +54,7 @@ interface LayoutTileSubmenuDefinition {
 
 interface HomeLayoutSheetProps {
 	bottomContent?: ReactNode;
+	columns?: LayoutGridColumns;
 	isMenuOpen: boolean;
 	isMenuVisible: boolean;
 	menuTiles: LayoutTileDefinition[];
@@ -61,6 +65,7 @@ interface HomeLayoutSheetProps {
 
 export function HomeLayoutSheet({
 	bottomContent,
+	columns = 4,
 	isMenuOpen,
 	isMenuVisible,
 	menuTiles,
@@ -99,11 +104,11 @@ export function HomeLayoutSheet({
 							) : null}
 						</LayoutImageBanner>
 					))}
-					<LayoutGrid>
+					<LayoutGrid columns={columns}>
 						{menuTiles.map((tile) => (
 							<LayoutQuickTile
 								key={tile.id}
-								colSpan={tile.colSpan}
+								colSpan={columns === 3 ? 1 : tile.colSpan}
 								hideLabel={tile.illustration?.kind === "cluster"}
 								label={tile.label}
 								rowSpan={tile.rowSpan}
