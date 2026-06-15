@@ -30,6 +30,7 @@ import { useBatteryState } from "./Header/useBatteryState";
 import {
 	HomeLayoutSheet,
 	type LayoutBannerDefinition,
+	type LayoutGridColumns,
 	type LayoutTileDefinition,
 } from "./Sheet/content";
 import { LayoutQuickTile } from "./Sheet/quickTile";
@@ -60,6 +61,7 @@ export interface LayoutProps {
 	defaultMenuOpen?: boolean;
 	hasMenuNotification?: boolean;
 	homeAction?: LayoutAction;
+	menuColumns?: LayoutGridColumns;
 	menuTiles: LayoutTileDefinition[];
 	onBack?: () => void;
 	showClock?: boolean;
@@ -98,25 +100,6 @@ export type {
 	LayoutBannerDefinition,
 	LayoutTileDefinition,
 } from "./Sheet/content";
-
-export interface LayoutProps {
-	actions?: LayoutAction[];
-	centerContent?: ReactNode;
-	dateLabel?: string;
-	defaultMenuOpen?: boolean;
-	hasMenuNotification?: boolean;
-	homeAction?: LayoutAction;
-	menuTiles: LayoutTileDefinition[];
-	onBack?: () => void;
-	topBanners: LayoutBannerDefinition[];
-	rightContent?: ReactNode;
-	statusLabel?: string;
-	timeLabel?: string;
-	variant?: LayoutVariant;
-
-	children?: ReactNode;
-	sheetBottomContent?: ReactNode;
-}
 
 export interface HomeScreenBannerInput {
 	alt: string;
@@ -182,6 +165,7 @@ function HomeLayout({
 	defaultMenuOpen = false,
 	hasMenuNotification = false,
 	homeAction = { ariaLabel: "Home", label: "Home" },
+	menuColumns,
 	menuTiles,
 	onBack,
 	rightContent,
@@ -280,6 +264,7 @@ function HomeLayout({
 			) : null}
 			<HomeLayoutSheet
 				bottomContent={sheetBottomContent}
+				{...(menuColumns !== undefined && { columns: menuColumns })}
 				isMenuOpen={isMenuOpen}
 				isMenuVisible={isMenuVisible}
 				menuTiles={menuTiles}
