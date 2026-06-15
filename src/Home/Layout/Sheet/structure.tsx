@@ -14,7 +14,7 @@ import {
 
 export type LayoutTileColumnSpan = 1 | 2 | 4;
 export type LayoutTileRowSpan = 1 | 2;
-type LayoutGridColumns = 2 | 4;
+export type LayoutGridColumns = 2 | 3 | 4;
 
 const layoutTileColumnClassMap: Record<LayoutTileColumnSpan, string> = {
 	1: "col-span-1",
@@ -29,6 +29,7 @@ const layoutTileRowClassMap: Record<LayoutTileRowSpan, string> = {
 
 const layoutGridColumnClassMap: Record<LayoutGridColumns, string> = {
 	2: "grid-cols-2",
+	3: "grid-cols-3",
 	4: "grid-cols-4",
 };
 
