@@ -16,8 +16,8 @@ const casualButtonVariants = tv({
 				"bg-ll-casual-yellow [--ll-casual-outline:var(--color-ll-casual-yellow-edge)] [--ll-casual-shade:var(--color-ll-casual-yellow-shade)]",
 		},
 		size: {
-			md: "h-[2.55rem] min-w-[7rem] px-6 text-[0.875rem] tracking-[0.2em]",
-			lg: "h-[2.85rem] min-w-[9rem] px-7 text-[1rem] tracking-[0.2em]",
+			md: "h-[2.55rem] min-w-28 px-6 text-[0.875rem] tracking-[0.2em]",
+			lg: "h-[2.85rem] min-w-36 px-7 text-[1rem] tracking-[0.2em]",
 		},
 	},
 	defaultVariants: {
