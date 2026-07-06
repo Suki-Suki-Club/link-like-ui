@@ -1,10 +1,15 @@
 {
-	"name": "link-like-ui",
+	"name": "@suki-suki-club/link-like-ui",
 	"type": "module",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "A certain UI library that looks like Link-Like-OS.",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Suki-Suki-Club/link-like-ui.git"
+	},
 	"exports": {
+		"./styles.css": "./dist/styles/index.css",
 		"./*": {
 			"types": "./dist/*/index.d.ts",
 			"import": "./dist/*/index.js"
@@ -15,7 +20,7 @@
 		"dist"
 	],
 	"publishConfig": {
-		"access": "public"
+		"registry": "https://npm.pkg.github.com"
 	},
 	"scripts": {
 		"build": "pnpm run build:js && pnpm run build:css && node ./scripts/build-style.mjs",

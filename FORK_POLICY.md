@@ -1,8 +1,8 @@
 # Fork Policy
 
-> **AI Agent Notice**: This document is the source of truth for how patches are managed in this fork. ALL agents working on this submodule MUST read this file before making changes. The parent repository (`link-like-blooming-network`) consumes this fork as a git submodule at `deps/linkura-ui`.
+> **AI Agent Notice**: This document is the source of truth for how patches are managed in this fork. ALL agents working on this submodule MUST read this file before making changes. The parent repository (`link-like-blooming-network`) consumes this fork as `@suki-suki-club/link-like-ui` via GitHub Packages.
 
-This repository is a fork of [`AkaakuHub/link-like-ui`](https://github.com/AkaakuHub/link-like-ui), maintained for use as a git submodule by [`kakeru-ikeda/link-like-blooming-network`](https://github.com/kakeru-ikeda/link-like-blooming-network) (the **parent**).
+This repository is a fork of [`AkaakuHub/link-like-ui`](https://github.com/AkaakuHub/link-like-ui), maintained for use as an npm package (GitHub Packages) by [`kakeru-ikeda/link-like-blooming-network`](https://github.com/kakeru-ikeda/link-like-blooming-network) (the **parent**).
 
 ## TL;DR for AI Agents
 
@@ -12,9 +12,10 @@ upstream_repo: AkaakuHub/link-like-ui
 upstream_ref:  main
 fork_repo:     kakeru-ikeda/linkura-ui
 parent_repo:   kakeru-ikeda/link-like-blooming-network
-parent_submodule_path: deps/linkura-ui
+distribution: GitHub Packages (@suki-suki-club/link-like-ui)
 push_to_upstream: NEVER
 sync_workflow: .github/workflows/upstream-sync.yml (cron: Mon 00:00 UTC)
+release_workflow: .github/workflows/release.yml (tag v*)
 branch_naming:
   app_specific_fix:    fix/blooming-<topic>
   app_specific_feat:   feat/blooming-<topic>
@@ -76,6 +77,9 @@ PRECONDITION: cwd is deps/linkura-ui (the submodule), not the parent
    git commit -m "chore: bump linkura-ui submodule to <short_sha> (<reason>)"
    git push
    ```
+   > **Note (2026-07-06)**: The parent no longer consumes this fork as a
+   > submodule. After merging, publish a new version (tag `v<version>`) and
+   > bump the dependency version in the parent's `packages/web/package.json`.
    THEN run `npm run build` in the affected parent package and verify with playwright.
 7. **Update [Active Patches](#active-patches)** in this file in the same PR if the patch is permanent.
 
@@ -121,6 +125,22 @@ If a `blooming-*` patch breaks due to upstream changes, fix it in a separate `fi
 | `00b6725`     | `fix/font-assets-extralight`        | Copy `Poppins-ExtraLight.ttf` to `dist/assets/fonts/`            | Permanent |
 | `c214f44`     | `feat/blooming-menu-auto-close-and-back-override` | Auto-close menu on tile select; add `onBack` prop on `Layout` for parent-controlled back (browser back, etc.) | Permanent |
 | _pending_     | `feat/blooming-home-button-closes-menu` | Dock home button auto-closes menu before invoking `homeAction.onClick` | Permanent |
+
+## Permanent Fork Divergences (Packaging)
+
+The following files intentionally diverge from upstream to support GitHub
+Packages distribution. When resolving upstream-sync conflicts in these
+files, **always keep the fork side** for the fields listed:
+
+| File | Divergence |
+| --- | --- |
+| `package.json` | `name` (scoped), `version`, `repository`, `publishConfig.registry`, `exports["./styles.css"]` |
+| `scripts/build-style.mjs` | CSS auto-injection removed (fonts copy only) |
+| `.github/workflows/release.yml` | Fork-only release workflow (does not exist upstream) |
+| `pnpm-workspace.yaml` | Fork-only pnpm build-script approvals (does not exist upstream) |
+
+Release procedure: merge to `main`, then push a `v<version>` tag (matching
+`package.json` version). CI publishes to GitHub Packages automatically.
 
 ## Non-goals
 
