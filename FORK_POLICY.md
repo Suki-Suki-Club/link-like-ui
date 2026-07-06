@@ -15,7 +15,8 @@ parent_repo:   kakeru-ikeda/link-like-blooming-network
 distribution: GitHub Packages (@suki-suki-club/link-like-ui)
 push_to_upstream: NEVER
 sync_workflow: .github/workflows/upstream-sync.yml (cron: Mon 00:00 UTC)
-release_workflow: .github/workflows/release.yml (tag v*)
+release_workflow: .github/workflows/release.yml (push to main, via changesets/action)
+changeset_required: every behavior-changing PR must include `pnpm changeset`
 branch_naming:
   app_specific_fix:    fix/blooming-<topic>
   app_specific_feat:   feat/blooming-<topic>
@@ -134,13 +135,32 @@ files, **always keep the fork side** for the fields listed:
 
 | File | Divergence |
 | --- | --- |
-| `package.json` | `name` (scoped), `version`, `repository`, `publishConfig.registry`, `exports["./styles.css"]` |
+| `package.json` | `name` (scoped), `version`, `repository`, `publishConfig.registry`, `exports["./styles.css"]`, `scripts.version`/`scripts.release` (changesets) |
 | `scripts/build-style.mjs` | CSS auto-injection removed (fonts copy only) |
-| `.github/workflows/release.yml` | Fork-only release workflow (does not exist upstream) |
+| `.github/workflows/release.yml` | Fork-only release workflow (does not exist upstream) — runs `changesets/action` |
 | `pnpm-workspace.yaml` | Fork-only pnpm build-script approvals (does not exist upstream) |
+| `.changeset/` | Fork-only changesets config (does not exist upstream) |
 
-Release procedure: merge to `main`, then push a `v<version>` tag (matching
-`package.json` version). CI publishes to GitHub Packages automatically.
+### Release procedure (Changesets, automated)
+
+1. On any PR that changes package behavior, add a changeset: `pnpm changeset`
+   (choose patch/minor/major, describe the change). Commit the generated
+   `.changeset/*.md` file with the PR.
+2. Merge the PR to `main`.
+3. `.github/workflows/release.yml` runs `changesets/action` on every push to
+   `main`:
+   - If unreleased changesets exist → opens/updates a `chore: version
+     packages` PR that bumps `package.json` and writes `CHANGELOG.md`.
+   - Merging that PR triggers the workflow again, which runs
+     `pnpm run release` (`changeset publish`) to publish to GitHub Packages
+     and create the matching `v<version>` git tag.
+4. No manual `bumpp`/tag push is needed anymore; the version bump only ships
+   once the maintainer merges the version-packages PR.
+
+This requires the repo's **Settings → Actions → General → Workflow
+permissions** to be "Read and write permissions" with "Allow GitHub Actions
+to create and approve pull requests" checked (both are also gated by the
+`Suki-Suki-Club` org-level Actions policy).
 
 ## Non-goals
 
