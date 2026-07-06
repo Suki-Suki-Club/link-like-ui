@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LoadingOverlay } from "../../../src/System/Loading";
+import { CasualModalPreview } from "./CasualModalPreview";
 import { ControlModalPreview } from "./ControlModalPreview";
 import { FilterModalPreview } from "./FilterModalPreview";
 import { FormModalPreview } from "./FormModalPreview";
@@ -22,6 +23,7 @@ export function ComponentsPreview() {
 				}}
 			/>
 			<PanelModalPreview />
+			<CasualModalPreview />
 			<ControlModalPreview />
 			<InfoModalPreview />
 			<FilterModalPreview />

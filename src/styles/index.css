@@ -58,6 +58,15 @@
 	--color-ll-badge-orange: #fc9060;
 	--color-ll-badge-red: #fa575e;
 	--color-ll-true-white: #ffffff;
+	--color-ll-casual-yellow: #efc94a;
+	--color-ll-casual-yellow-shade: #c6592e;
+	--color-ll-casual-yellow-edge: #b18a43;
+	--color-ll-casual-blue: #48b1eb;
+	--color-ll-casual-blue-shade: #2c7ac4;
+	--color-ll-casual-blue-edge: #3a8cbb;
+	--color-ll-casual-title: #5e97b0;
+	--color-ll-casual-dash: #9e9ea0;
+	--color-ll-casual-ink: #0a0a0a;
 }
 
 @media not all and (min-width: 40rem) {
@@ -195,6 +204,50 @@
 		align-items: center;
 		justify-content: space-between;
 		column-gap: calc(var(--spacing) * 3);
+	}
+
+	.ll-casual-outline-text {
+		text-shadow:
+			-0.07em -0.07em 0 var(--ll-casual-outline),
+			0.07em -0.07em 0 var(--ll-casual-outline),
+			-0.07em 0.07em 0 var(--ll-casual-outline),
+			0.07em 0.07em 0 var(--ll-casual-outline),
+			-0.09em 0 0 var(--ll-casual-outline),
+			0.09em 0 0 var(--ll-casual-outline),
+			0 -0.09em 0 var(--ll-casual-outline),
+			0 0.09em 0 var(--ll-casual-outline);
+	}
+
+	.ll-casual-title-text {
+		text-shadow:
+			-0.07em -0.07em 0 var(--color-ll-casual-title),
+			0.07em -0.07em 0 var(--color-ll-casual-title),
+			-0.07em 0.07em 0 var(--color-ll-casual-title),
+			0.07em 0.07em 0 var(--color-ll-casual-title),
+			-0.1em 0 0 var(--color-ll-casual-title),
+			0.1em 0 0 var(--color-ll-casual-title),
+			0 -0.1em 0 var(--color-ll-casual-title),
+			0 0.1em 0 var(--color-ll-casual-title),
+			0.08em 0.16em 0.08em
+			color-mix(in srgb, var(--color-ll-gray) 45%, transparent);
+	}
+
+	.ll-shadow-casual-button {
+		box-shadow:
+			0 0 2px color-mix(in srgb, var(--color-ll-gray) 45%, transparent),
+			0 5px 0 var(--ll-casual-shade),
+			0 7px 4px color-mix(in srgb, var(--color-ll-gray) 40%, transparent);
+	}
+
+	.ll-casual-dashed-line {
+		height: 2px;
+		background-image: repeating-linear-gradient(
+			to right,
+			var(--color-ll-casual-dash) 0,
+			var(--color-ll-casual-dash) 11px,
+			transparent 11px,
+			transparent 15.5px
+		);
 	}
 }
 

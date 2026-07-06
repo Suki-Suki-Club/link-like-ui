@@ -3,7 +3,7 @@ import { tv } from "tailwind-variants";
 import { cn } from "../../utils";
 import { ButtonBase } from "./primitives";
 
-type ButtonVariant = "primary" | "secondary" | "danger";
+type ButtonVariant = "gradient" | "secondary" | "danger";
 type ButtonSize = "sm" | "md" | "lg" | "modal";
 type ButtonRadius = "default" | "dialog";
 type ButtonWidth = "auto" | "dialog";
@@ -12,7 +12,7 @@ const buttonVariants = tv({
 	base: "inline-flex items-center justify-center gap-[0.4rem] border border-none font-semibold leading-none tracking-[0.01em] transition-[filter,transform,background-color,color,border-color] duration-150 ease-out focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-ll-label disabled:cursor-not-allowed disabled:bg-ll-disabled hover:brightness-80 disabled:hover:brightness-100",
 	variants: {
 		variant: {
-			primary: "ll-bg-system-gradient text-ll-white disabled:bg-none",
+			gradient: "ll-bg-system-gradient text-ll-white disabled:bg-none",
 			secondary: "ll-shadow-control bg-white text-ll-gray",
 			danger:
 				"bg-linear-to-r from-ll-unfollow-left to-ll-unfollow-right text-ll-white disabled:bg-none",
@@ -33,7 +33,7 @@ const buttonVariants = tv({
 		},
 	},
 	defaultVariants: {
-		variant: "primary",
+		variant: "gradient",
 		size: "md",
 		radius: "default",
 		width: "auto",
@@ -53,7 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			className,
 			radius = "default",
 			size = "md",
-			variant = "primary",
+			variant = "gradient",
 			width = "auto",
 			...props
 		},
