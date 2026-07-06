@@ -26,3 +26,13 @@
 - 作成したUIは、かならずユーザーが確認できるよう、テスト環境に追加すること。現在は/componentsのURLで確認できるようにしている。
 - 各コンポーネントはディレクトリ名で分割構成（`primitives.tsx` / `structure.tsx` / `content.tsx` / `index.tsx`）を維持し、１ファイルの責務を減らして正しく分割する。t-wadaさんが見ても怒らないようにすること。
 - playground側では、コンポーネントを呼ぶだけで、classnameで細かいスタイル指定をしてはならない。代わりにライブラリ側で調整すること。
+
+# リリース
+
+- リリースはChangesetsで自動化済み。手動での`bumpp`実行・タグpushは廃止。
+- 挙動が変わるPRには`pnpm changeset`でchangesetファイルを追加してコミットすること。
+- `.github/workflows/release.yml`がmainへのpushで起動し、`changesets/action`が以下を行う。
+  - 未消化のchangesetがあれば「chore: version packages」PRを自動生成/更新（`package.json`バージョンと`CHANGELOG.md`を更新）。
+  - そのPRがマージされると同ワークフローが再実行され、`pnpm run release`（`changeset publish`）でGitHub Packagesへpublishし、`v<version>`タグを作成。
+- この自動PR作成には、リポジトリの Settings > Actions > General > Workflow permissions を「Read and write permissions」＋「Allow GitHub Actions to create and approve pull requests」有効化が必要（Suki-Suki-Club org側のActionsポリシーでも許可されている必要あり）。
+- リリース手順の詳細・fork固有の差分は`FORK_POLICY.md`の「Release procedure (Changesets, automated)」を参照。
