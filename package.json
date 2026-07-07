@@ -1,7 +1,7 @@
 {
 	"name": "@suki-suki-club/link-like-ui",
 	"type": "module",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"description": "A certain UI library that looks like Link-Like-OS.",
 	"license": "MIT",
 	"repository": {
