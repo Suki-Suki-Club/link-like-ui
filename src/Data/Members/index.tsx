@@ -14,8 +14,12 @@ export const MEMBERS = [
 		themeColor: "#68be8d",
 		iconUrl: "https://sukisuki.club/icons/1021.png",
 		voiceActor: "花宮初奈",
-		voiceActorKana: "はなみや にいな",
-		voiceActorEn: "Niina Hanamiya",
+		voiceActorFamilyName: "花宮",
+		voiceActorGivenName: "初奈",
+		voiceActorFamilyNameKana: "はなみや",
+		voiceActorGivenNameKana: "にいな",
+		voiceActorFamilyNameEn: "Hanamiya",
+		voiceActorGivenNameEn: "Niina",
 	},
 	{
 		id: 1022,
@@ -30,8 +34,12 @@ export const MEMBERS = [
 		themeColor: "#ba2636",
 		iconUrl: "https://sukisuki.club/icons/1022.png",
 		voiceActor: "佐々木琴子",
-		voiceActorKana: "ささき ことこ",
-		voiceActorEn: "Kotoko Sasaki",
+		voiceActorFamilyName: "佐々木",
+		voiceActorGivenName: "琴子",
+		voiceActorFamilyNameKana: "ささき",
+		voiceActorGivenNameKana: "ことこ",
+		voiceActorFamilyNameEn: "Sasaki",
+		voiceActorGivenNameEn: "Kotoko",
 	},
 	{
 		id: 1023,
@@ -46,8 +54,12 @@ export const MEMBERS = [
 		themeColor: "#c8c2c6",
 		iconUrl: "https://sukisuki.club/icons/1023.png",
 		voiceActor: "月音こな",
-		voiceActorKana: "つきね こな",
-		voiceActorEn: "Kona Tsukine",
+		voiceActorFamilyName: "月音",
+		voiceActorGivenName: "こな",
+		voiceActorFamilyNameKana: "つきね",
+		voiceActorGivenNameKana: "こな",
+		voiceActorFamilyNameEn: "Tsukine",
+		voiceActorGivenNameEn: "Kona",
 	},
 	{
 		id: 1031,
@@ -62,8 +74,12 @@ export const MEMBERS = [
 		themeColor: "#f8b500",
 		iconUrl: "https://sukisuki.club/icons/1031.png",
 		voiceActor: "楡井希実",
-		voiceActorKana: "にれい のぞみ",
-		voiceActorEn: "Nozomi Nirei",
+		voiceActorFamilyName: "楡井",
+		voiceActorGivenName: "希実",
+		voiceActorFamilyNameKana: "にれい",
+		voiceActorGivenNameKana: "のぞみ",
+		voiceActorFamilyNameEn: "Nirei",
+		voiceActorGivenNameEn: "Nozomi",
 	},
 	{
 		id: 1032,
@@ -78,8 +94,12 @@ export const MEMBERS = [
 		themeColor: "#5383c3",
 		iconUrl: "https://sukisuki.club/icons/1032.png",
 		voiceActor: "野中ここな",
-		voiceActorKana: "のなか ここな",
-		voiceActorEn: "Kokona Nonaka",
+		voiceActorFamilyName: "野中",
+		voiceActorGivenName: "ここな",
+		voiceActorFamilyNameKana: "のなか",
+		voiceActorGivenNameKana: "ここな",
+		voiceActorFamilyNameEn: "Nonaka",
+		voiceActorGivenNameEn: "Kokona",
 	},
 	{
 		id: 1033,
@@ -94,8 +114,12 @@ export const MEMBERS = [
 		themeColor: "#e7609e",
 		iconUrl: "https://sukisuki.club/icons/1033.png",
 		voiceActor: "菅叶和",
-		voiceActorKana: "かん かんな",
-		voiceActorEn: "Kanna Kan",
+		voiceActorFamilyName: "菅",
+		voiceActorGivenName: "叶和",
+		voiceActorFamilyNameKana: "かん",
+		voiceActorGivenNameKana: "かんな",
+		voiceActorFamilyNameEn: "Kan",
+		voiceActorGivenNameEn: "Kanna",
 	},
 	{
 		id: 1041,
@@ -110,8 +134,12 @@ export const MEMBERS = [
 		themeColor: "#a2d7dd",
 		iconUrl: "https://sukisuki.club/icons/1041.png",
 		voiceActor: "櫻井陽菜",
-		voiceActorKana: "さくらい ひな",
-		voiceActorEn: "Hina Sakurai",
+		voiceActorFamilyName: "櫻井",
+		voiceActorGivenName: "陽菜",
+		voiceActorFamilyNameKana: "さくらい",
+		voiceActorGivenNameKana: "ひな",
+		voiceActorFamilyNameEn: "Sakurai",
+		voiceActorGivenNameEn: "Hina",
 	},
 	{
 		id: 1042,
@@ -126,8 +154,12 @@ export const MEMBERS = [
 		themeColor: "#fad764",
 		iconUrl: "https://sukisuki.club/icons/1042.png",
 		voiceActor: "葉山風花",
-		voiceActorKana: "はやま ふうか",
-		voiceActorEn: "Fuka Hayama",
+		voiceActorFamilyName: "葉山",
+		voiceActorGivenName: "風花",
+		voiceActorFamilyNameKana: "はやま",
+		voiceActorGivenNameKana: "ふうか",
+		voiceActorFamilyNameEn: "Hayama",
+		voiceActorGivenNameEn: "Fuka",
 	},
 	{
 		id: 1043,
@@ -142,8 +174,12 @@ export const MEMBERS = [
 		themeColor: "#9d8de2",
 		iconUrl: "https://sukisuki.club/icons/1043.png",
 		voiceActor: "来栖りん",
-		voiceActorKana: "くるす りん",
-		voiceActorEn: "Rin Kurusu",
+		voiceActorFamilyName: "来栖",
+		voiceActorGivenName: "りん",
+		voiceActorFamilyNameKana: "くるす",
+		voiceActorGivenNameKana: "りん",
+		voiceActorFamilyNameEn: "Kurusu",
+		voiceActorGivenNameEn: "Rin",
 	},
 	{
 		id: 1051,
@@ -158,8 +194,12 @@ export const MEMBERS = [
 		themeColor: "#1ebecd",
 		iconUrl: "https://sukisuki.club/icons/1051.png",
 		voiceActor: "進藤あまね",
-		voiceActorKana: "しんどう あまね",
-		voiceActorEn: "Amane Shindo",
+		voiceActorFamilyName: "進藤",
+		voiceActorGivenName: "あまね",
+		voiceActorFamilyNameKana: "しんどう",
+		voiceActorGivenNameKana: "あまね",
+		voiceActorFamilyNameEn: "Shindo",
+		voiceActorGivenNameEn: "Amane",
 	},
 	{
 		id: 1052,
@@ -177,8 +217,12 @@ export const MEMBERS = [
 		themeColor: "#f56455",
 		iconUrl: "https://sukisuki.club/icons/1052.png",
 		voiceActor: "三宅美羽",
-		voiceActorKana: "みやけ みう",
-		voiceActorEn: "Miu Miyake",
+		voiceActorFamilyName: "三宅",
+		voiceActorGivenName: "美羽",
+		voiceActorFamilyNameKana: "みやけ",
+		voiceActorGivenNameKana: "みう",
+		voiceActorFamilyNameEn: "Miyake",
+		voiceActorGivenNameEn: "Miu",
 	},
 ] as const satisfies readonly {
 	id: number;
@@ -196,8 +240,12 @@ export const MEMBERS = [
 	themeColor: string;
 	iconUrl: string;
 	voiceActor: string;
-	voiceActorKana: string;
-	voiceActorEn: string;
+	voiceActorFamilyName: string;
+	voiceActorGivenName: string;
+	voiceActorFamilyNameKana: string;
+	voiceActorGivenNameKana: string;
+	voiceActorFamilyNameEn: string;
+	voiceActorGivenNameEn: string;
 }[];
 
 export type Member = (typeof MEMBERS)[number];
