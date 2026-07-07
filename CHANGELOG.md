@@ -1,5 +1,11 @@
 # @suki-suki-club/link-like-ui
 
+## 0.3.0
+
+### Minor Changes
+
+- [#6](https://github.com/Suki-Suki-Club/link-like-ui/pull/6) [`eea3e74`](https://github.com/Suki-Suki-Club/link-like-ui/commit/eea3e740bb1cc8ca135ba35365b2f4d4537ee131) Thanks [@kakeru-ikeda](https://github.com/kakeru-ikeda)! - Add `Data/Generations`, `Data/Members`, `Data/Units` constants (102〜105 期、メンバー 11 名、ユニット 10 件と期別ロスター) sourced from link-like-blooming-network / link-like-essentials / sukisuki-club-portal.
+
 ## 0.2.0
 
 ### Minor Changes
