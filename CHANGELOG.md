@@ -1,5 +1,11 @@
 # @suki-suki-club/link-like-ui
 
+## 0.4.0
+
+### Minor Changes
+
+- [#9](https://github.com/Suki-Suki-Club/link-like-ui/pull/9) [`5ecb1a8`](https://github.com/Suki-Suki-Club/link-like-ui/commit/5ecb1a8a0e53379ef8d8bb04ed3e59b1c12e9cc5) Thanks [@kakeru-ikeda](https://github.com/kakeru-ikeda)! - Add split member names, kana and English spellings, and voice actor metadata to `MEMBERS`.
+
 ## 0.3.0
 
 ### Minor Changes
