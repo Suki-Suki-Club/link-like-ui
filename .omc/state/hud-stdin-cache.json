@@ -1,0 +1,48 @@
+{
+	"session_id": "dfdd27eb-dcb5-49e5-a57d-64bb58ccae31",
+	"transcript_path": "/home/server/.claude/projects/-home-server-github-link-like-ui/dfdd27eb-dcb5-49e5-a57d-64bb58ccae31.jsonl",
+	"cwd": "/home/server/github/link-like-ui",
+	"prompt_id": "4d4b0661-f93f-4fa2-9b07-9d8159e4bbe1",
+	"effort": { "level": "xhigh" },
+	"session_name": "共通定数をパッケージから提供するよう改善",
+	"model": { "id": "claude-sonnet-5", "display_name": "Sonnet 5" },
+	"workspace": {
+		"current_dir": "/home/server/github/link-like-ui",
+		"project_dir": "/home/server/github/link-like-ui",
+		"added_dirs": [],
+		"repo": {
+			"host": "github.com",
+			"owner": "Suki-Suki-Club",
+			"name": "link-like-ui"
+		}
+	},
+	"version": "2.1.201",
+	"output_style": { "name": "default" },
+	"cost": {
+		"total_cost_usd": 44.49908204999998,
+		"total_duration_ms": 76575708,
+		"total_api_duration_ms": 5266913,
+		"total_lines_added": 1852,
+		"total_lines_removed": 103
+	},
+	"context_window": {
+		"total_input_tokens": 264596,
+		"total_output_tokens": 272,
+		"context_window_size": 1000000,
+		"current_usage": {
+			"input_tokens": 2,
+			"output_tokens": 272,
+			"cache_creation_input_tokens": 637,
+			"cache_read_input_tokens": 263957
+		},
+		"used_percentage": 26,
+		"remaining_percentage": 74
+	},
+	"exceeds_200k_tokens": true,
+	"fast_mode": false,
+	"thinking": { "enabled": true },
+	"rate_limits": {
+		"five_hour": { "used_percentage": 6, "resets_at": 1783438200 },
+		"seven_day": { "used_percentage": 27, "resets_at": 1783666800 }
+	}
+}
