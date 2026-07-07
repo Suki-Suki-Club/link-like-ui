@@ -6,3 +6,4 @@ dist
 .playwright-mcp
 cc-docs
 docs/superpowers
+.omc
