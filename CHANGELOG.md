@@ -1,5 +1,11 @@
 # @suki-suki-club/link-like-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- [`58e26ac`](https://github.com/Suki-Suki-Club/link-like-ui/commit/58e26ac6c5dac7e25cdc9ca472485b7029cc0542) Thanks [@kakeru-ikeda](https://github.com/kakeru-ikeda)! - Add `Home/Dock` as an independently importable entry (`@suki-suki-club/link-like-ui/Home/Dock`, exporting `HomeLayoutDock` and its layout-dock primitives), moved out of `Home/Layout`. Remove the unused `System/FooterPanel` component and its exports.
+
 ## 0.4.0
 
 ### Minor Changes
