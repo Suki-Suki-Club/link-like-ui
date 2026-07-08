@@ -1,3 +1,135 @@
 @import "../../src/styles/index.css";
 
 @source "./**/*.{ts,tsx}";
+
+@layer utilities {
+	.ll-catalog-layout {
+		display: flex;
+		min-height: 100dvh;
+		width: 100%;
+		overflow: hidden;
+		background:
+			linear-gradient(
+				180deg,
+				color-mix(in srgb, var(--color-ll-system-left) 10%, var(--color-ll-white)) 0%,
+				color-mix(in srgb, var(--color-ll-system-right) 5%, var(--color-ll-white)) 100%
+			);
+	}
+
+	.ll-catalog-sidebar {
+		display: flex;
+		height: 100dvh;
+		width: 15rem;
+		flex-shrink: 0;
+		flex-direction: column;
+		gap: 1rem;
+		overflow-y: auto;
+		border-right: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 80%, transparent);
+		background-color: color-mix(
+			in srgb,
+			var(--color-ll-white) 80%,
+			var(--color-ll-page-bg)
+		);
+		padding: 1rem;
+		backdrop-filter: blur(12px);
+	}
+
+	.ll-catalog-brand {
+		padding-inline: 0.5rem;
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: var(--color-ll-label);
+	}
+
+	.ll-catalog-section-label {
+		padding-inline: 0.5rem;
+		padding-bottom: 0.25rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-ll-gray) 55%, var(--color-ll-white));
+	}
+
+	.ll-catalog-main {
+		flex: 1 1 0%;
+		overflow-y: auto;
+	}
+
+	.ll-catalog-page {
+		margin-inline: auto;
+		max-width: 48rem;
+		padding: 2rem 1.5rem 3rem;
+	}
+
+	.ll-catalog-page-title {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: color-mix(in srgb, var(--color-ll-gray) 88%, black);
+	}
+
+	.ll-catalog-page-description {
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: var(--color-ll-gray);
+	}
+
+	.ll-catalog-page-content {
+		margin-top: 1.5rem;
+		display: grid;
+		row-gap: 1.5rem;
+	}
+
+	.ll-catalog-card {
+		border-radius: 1rem;
+		border: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 75%, transparent);
+		background-color: color-mix(in srgb, var(--color-ll-white) 94%, transparent);
+		padding: 1rem;
+		box-shadow: 0 0.5rem 1.5rem
+			color-mix(in srgb, var(--color-ll-card-shadow) 30%, transparent);
+	}
+
+	.ll-catalog-block-title {
+		margin-bottom: 0.75rem;
+		font-size: 0.875rem;
+		font-weight: 600;
+		color: var(--color-ll-gray);
+	}
+
+	.ll-catalog-preview-surface {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1rem;
+		border-radius: 0.75rem;
+		background-color: var(--color-ll-modal-content-gray);
+		padding: 1rem;
+	}
+
+	.ll-catalog-code-snippet {
+		margin-top: 0.75rem;
+		overflow-x: auto;
+		border-radius: 0.75rem;
+		background-color: color-mix(in srgb, var(--color-ll-gray) 88%, black);
+		padding: 0.75rem;
+		font-size: 0.75rem;
+		line-height: 1.6;
+		color: var(--color-ll-white);
+	}
+}
+
+@media (max-width: 47.99rem) {
+	.ll-catalog-layout {
+		flex-direction: column;
+	}
+
+	.ll-catalog-sidebar {
+		height: auto;
+		width: 100%;
+		border-right: 0;
+		border-bottom: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 80%, transparent);
+	}
+}

@@ -66,6 +66,7 @@
 		"@vitejs/plugin-react": "^5.1.2",
 		"knip": "^5.83.1",
 		"lefthook": "^2.1.0",
+		"react-router-dom": "^7.18.1",
 		"tailwindcss": "^4.2.1",
 		"tsdown": "^0.18.1",
 		"typescript": "^5.9.3",
