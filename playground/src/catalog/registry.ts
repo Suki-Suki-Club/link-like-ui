@@ -2,6 +2,7 @@ import type { CatalogEntry } from "./types";
 import { AvatarCatalog } from "./system/AvatarCatalog";
 import { BadgeCatalog } from "./system/BadgeCatalog";
 import { ButtonCatalog } from "./system/ButtonCatalog";
+import { CardCatalog } from "./system/CardCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -24,5 +25,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Button",
 		category: "System",
 		Page: ButtonCatalog,
+	},
+	{
+		slug: "card",
+		path: "/system/card",
+		title: "Card",
+		category: "System",
+		Page: CardCatalog,
 	},
 ];
