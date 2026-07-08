@@ -125,6 +125,35 @@
 		gap: 1rem;
 	}
 
+	.ll-catalog-generation-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.ll-catalog-generation-card {
+		border-radius: 1rem;
+		border: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 75%, transparent);
+		background-color: color-mix(in srgb, var(--color-ll-white) 94%, transparent);
+		padding: 1rem;
+		text-align: center;
+		box-shadow: 0 0.5rem 1.5rem
+			color-mix(in srgb, var(--color-ll-card-shadow) 30%, transparent);
+	}
+
+	.ll-catalog-generation-label {
+		font-size: 1.125rem;
+		font-weight: 700;
+		color: color-mix(in srgb, var(--color-ll-gray) 88%, black);
+	}
+
+	.ll-catalog-generation-id {
+		margin-top: 0.25rem;
+		font-size: 0.75rem;
+		color: var(--color-ll-gray);
+	}
+
 	.ll-catalog-member-card {
 		border-radius: 1rem;
 		border: 1px solid
@@ -239,6 +268,10 @@
 }
 
 @media (min-width: 40rem) {
+	.ll-catalog-generation-grid {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
 	.ll-catalog-member-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}

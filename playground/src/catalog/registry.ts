@@ -1,4 +1,5 @@
 import type { CatalogEntry } from "./types";
+import { GenerationsCatalog } from "./data/GenerationsCatalog";
 import { MembersCatalog } from "./data/MembersCatalog";
 import { LayoutCatalog } from "./layout/LayoutCatalog";
 import { AvatarCatalog } from "./system/AvatarCatalog";
@@ -192,5 +193,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Members",
 		category: "Data",
 		Page: MembersCatalog,
+	},
+	{
+		slug: "generations",
+		path: "/data/generations",
+		title: "Generations",
+		category: "Data",
+		Page: GenerationsCatalog,
 	},
 ];
