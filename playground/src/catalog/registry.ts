@@ -7,6 +7,7 @@ import { CasualModalCatalog } from "./system/CasualModalCatalog";
 import { CardCatalog } from "./system/CardCatalog";
 import { FormCatalog } from "./system/FormCatalog";
 import { FooterPanelCatalog } from "./system/FooterPanelCatalog";
+import { GridMenuCatalog } from "./system/GridMenuCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -64,5 +65,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Form",
 		category: "System",
 		Page: FormCatalog,
+	},
+	{
+		slug: "grid-menu",
+		path: "/system/grid-menu",
+		title: "Grid Menu",
+		category: "System",
+		Page: GridMenuCatalog,
 	},
 ];
