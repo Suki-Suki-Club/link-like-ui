@@ -17,6 +17,7 @@ import { RadioCatalog } from "./system/RadioCatalog";
 import { SeparatorCatalog } from "./system/SeparatorCatalog";
 import { SliderCatalog } from "./system/SliderCatalog";
 import { SystemModalCatalog } from "./system/SystemModalCatalog";
+import { TabCatalog } from "./system/TabCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -144,5 +145,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "System Modal",
 		category: "System",
 		Page: SystemModalCatalog,
+	},
+	{
+		slug: "tab",
+		path: "/system/tab",
+		title: "Tab",
+		category: "System",
+		Page: TabCatalog,
 	},
 ];
