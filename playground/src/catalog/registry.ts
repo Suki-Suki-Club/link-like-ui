@@ -20,6 +20,7 @@ import { SystemModalCatalog } from "./system/SystemModalCatalog";
 import { TabCatalog } from "./system/TabCatalog";
 import { TapEffectCatalog } from "./system/TapEffectCatalog";
 import { TableCatalog } from "./system/TableCatalog";
+import { ToggleCatalog } from "./system/ToggleCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -168,5 +169,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Tap Effect",
 		category: "System",
 		Page: TapEffectCatalog,
+	},
+	{
+		slug: "toggle",
+		path: "/system/toggle",
+		title: "Toggle",
+		category: "System",
+		Page: ToggleCatalog,
 	},
 ];
