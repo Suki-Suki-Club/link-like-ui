@@ -5,6 +5,7 @@ import { ButtonCatalog } from "./system/ButtonCatalog";
 import { CasualButtonCatalog } from "./system/CasualButtonCatalog";
 import { CasualModalCatalog } from "./system/CasualModalCatalog";
 import { CardCatalog } from "./system/CardCatalog";
+import { FooterPanelCatalog } from "./system/FooterPanelCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -48,5 +49,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Casual Modal",
 		category: "System",
 		Page: CasualModalCatalog,
+	},
+	{
+		slug: "footer-panel",
+		path: "/system/footer-panel",
+		title: "Footer Panel",
+		category: "System",
+		Page: FooterPanelCatalog,
 	},
 ];
