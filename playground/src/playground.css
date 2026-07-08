@@ -131,6 +131,12 @@
 		gap: 1rem;
 	}
 
+	.ll-catalog-unit-grid {
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
 	.ll-catalog-generation-card {
 		border-radius: 1rem;
 		border: 1px solid
@@ -251,6 +257,110 @@
 			var(--color-ll-white)
 		);
 	}
+
+	.ll-catalog-unit-card {
+		border-radius: 1rem;
+		border: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 75%, transparent);
+		background-color: color-mix(in srgb, var(--color-ll-white) 94%, transparent);
+		padding: 1rem;
+		box-shadow: 0 0.5rem 1.5rem
+			color-mix(in srgb, var(--color-ll-card-shadow) 30%, transparent);
+	}
+
+	.ll-catalog-unit-card-trigger {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		gap: 0.75rem;
+		text-align: left;
+	}
+
+	.ll-catalog-unit-icon {
+		height: 3rem;
+		width: 3rem;
+		flex-shrink: 0;
+		border-radius: 0.75rem;
+		object-fit: cover;
+		box-shadow: 0 0.15rem 0.65rem
+			color-mix(in srgb, var(--color-ll-card-shadow) 28%, transparent);
+	}
+
+	.ll-catalog-unit-icon-placeholder {
+		display: grid;
+		height: 3rem;
+		width: 3rem;
+		flex-shrink: 0;
+		place-items: center;
+		border-radius: 0.75rem;
+		background-color: color-mix(
+			in srgb,
+			var(--color-ll-modal-content-gray) 78%,
+			var(--color-ll-white)
+		);
+		font-size: 0.75rem;
+		color: color-mix(in srgb, var(--color-ll-gray) 58%, var(--color-ll-white));
+	}
+
+	.ll-catalog-unit-name {
+		display: block;
+		font-weight: 700;
+		color: color-mix(in srgb, var(--color-ll-gray) 88%, black);
+	}
+
+	.ll-catalog-unit-category {
+		display: block;
+		font-size: 0.75rem;
+		text-transform: capitalize;
+		color: var(--color-ll-gray);
+	}
+
+	.ll-catalog-unit-details {
+		margin-top: 0.75rem;
+		display: grid;
+		row-gap: 0.75rem;
+		border-top: 1px solid
+			color-mix(in srgb, var(--color-ll-avatar-border) 55%, transparent);
+		padding-top: 0.75rem;
+	}
+
+	.ll-catalog-unit-period {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: color-mix(in srgb, var(--color-ll-gray) 78%, black);
+	}
+
+	.ll-catalog-unit-chip-list {
+		margin-top: 0.25rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
+
+	.ll-catalog-unit-chip {
+		display: inline-flex;
+		border-radius: 9999px;
+		background-color: color-mix(
+			in srgb,
+			var(--color-ll-modal-content-gray) 84%,
+			var(--color-ll-white)
+		);
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		color: color-mix(in srgb, var(--color-ll-gray) 82%, black);
+		transition:
+			filter 150ms ease-out,
+			background-color 150ms ease-out;
+	}
+
+	.ll-catalog-unit-chip:hover {
+		filter: brightness(0.97);
+		background-color: color-mix(
+			in srgb,
+			var(--color-ll-avatar-border) 42%,
+			var(--color-ll-white)
+		);
+	}
 }
 
 @media (max-width: 47.99rem) {
@@ -273,6 +383,10 @@
 	}
 
 	.ll-catalog-member-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.ll-catalog-unit-grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
