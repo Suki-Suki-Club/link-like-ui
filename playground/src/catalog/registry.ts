@@ -3,6 +3,7 @@ import { AvatarCatalog } from "./system/AvatarCatalog";
 import { BadgeCatalog } from "./system/BadgeCatalog";
 import { ButtonCatalog } from "./system/ButtonCatalog";
 import { CasualButtonCatalog } from "./system/CasualButtonCatalog";
+import { CasualModalCatalog } from "./system/CasualModalCatalog";
 import { CardCatalog } from "./system/CardCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
@@ -40,5 +41,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Casual Button",
 		category: "System",
 		Page: CasualButtonCatalog,
+	},
+	{
+		slug: "casual-modal",
+		path: "/system/casual-modal",
+		title: "Casual Modal",
+		category: "System",
+		Page: CasualModalCatalog,
 	},
 ];
