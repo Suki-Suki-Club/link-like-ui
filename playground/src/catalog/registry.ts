@@ -13,6 +13,7 @@ import { ListCatalog } from "./system/ListCatalog";
 import { LoadingCatalog } from "./system/LoadingCatalog";
 import { ModalTabCatalog } from "./system/ModalTabCatalog";
 import { PageHeaderCatalog } from "./system/PageHeaderCatalog";
+import { RadioCatalog } from "./system/RadioCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -112,5 +113,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Page Header",
 		category: "System",
 		Page: PageHeaderCatalog,
+	},
+	{
+		slug: "radio",
+		path: "/system/radio",
+		title: "Radio",
+		category: "System",
+		Page: RadioCatalog,
 	},
 ];
