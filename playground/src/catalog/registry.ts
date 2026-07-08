@@ -1,5 +1,6 @@
 import type { CatalogEntry } from "./types";
 import { AvatarCatalog } from "./system/AvatarCatalog";
+import { BadgeCatalog } from "./system/BadgeCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -8,5 +9,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Avatar",
 		category: "System",
 		Page: AvatarCatalog,
+	},
+	{
+		slug: "badge",
+		path: "/system/badge",
+		title: "Badge",
+		category: "System",
+		Page: BadgeCatalog,
 	},
 ];
