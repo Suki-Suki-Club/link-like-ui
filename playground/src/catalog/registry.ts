@@ -11,6 +11,7 @@ import { GridMenuCatalog } from "./system/GridMenuCatalog";
 import { IconCatalog } from "./system/IconCatalog";
 import { ListCatalog } from "./system/ListCatalog";
 import { LoadingCatalog } from "./system/LoadingCatalog";
+import { ModalTabCatalog } from "./system/ModalTabCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -96,5 +97,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Loading",
 		category: "System",
 		Page: LoadingCatalog,
+	},
+	{
+		slug: "modal-tab",
+		path: "/system/modal-tab",
+		title: "Modal Tab",
+		category: "System",
+		Page: ModalTabCatalog,
 	},
 ];
