@@ -15,6 +15,7 @@ import {
 	SystemModalContent,
 	SystemModalTitle,
 } from "../../System/SystemModal";
+import { HomeLayoutDock } from "../Dock/content";
 import {
 	homeMenuCloseAnimationDurationCssVar,
 	homeMenuCloseAnimationDurationMs,
@@ -23,7 +24,6 @@ import {
 	homeMenuScrimInAnimationClass,
 	homeMenuScrimOutAnimationClass,
 } from "./animation";
-import { HomeLayoutDock } from "./Dock/content";
 import { HomeLayoutHeader } from "./Header/content";
 import { formatLocalClock } from "./Header/helpers";
 import { useBatteryState } from "./Header/useBatteryState";

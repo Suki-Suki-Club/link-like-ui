@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, HTMLAttributes } from "react";
-import { cn } from "../../../utils";
-import { LayoutButtonBase } from "../primitives";
+import { cn } from "../../utils";
+import { LayoutButtonBase } from "../Layout/primitives";
 
 export function LayoutDock({
 	className,
