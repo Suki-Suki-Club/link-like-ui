@@ -23,10 +23,10 @@ export function IconsCatalog() {
 				{icons.map(({ name, Icon }) => (
 					<div
 						key={name}
-						className="flex flex-col items-center gap-2 rounded-xl border border-[color:color-mix(in_srgb,var(--color-ll-avatar-border)_75%,transparent)] bg-[color:color-mix(in_srgb,var(--color-ll-white)_94%,transparent)] p-4 shadow-[0_0.5rem_1.5rem_color-mix(in_srgb,var(--color-ll-card-shadow)_30%,transparent)]"
+						className="flex flex-col items-center gap-2 rounded-xl border border-[color-mix(in_srgb,var(--color-ll-avatar-border)_75%,transparent)] bg-[color-mix(in_srgb,var(--color-ll-white)_94%,transparent)] p-4 shadow-[0_0.5rem_1.5rem_color-mix(in_srgb,var(--color-ll-card-shadow)_30%,transparent)]"
 					>
 						<Icon className="h-8 w-8 text-ll-label" />
-						<span className="text-sm font-semibold text-[color:color-mix(in_srgb,var(--color-ll-gray)_88%,black)]">
+						<span className="text-sm font-semibold text-[color-mix(in_srgb,var(--color-ll-gray)_88%,black)]">
 							{name}
 						</span>
 						<code className="text-[0.65rem] text-ll-gray">{importPath}</code>

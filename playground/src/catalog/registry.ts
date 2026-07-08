@@ -3,6 +3,7 @@ import { GenerationsCatalog } from "./data/GenerationsCatalog";
 import { MembersCatalog } from "./data/MembersCatalog";
 import { UnitsCatalog } from "./data/UnitsCatalog";
 import { IconsCatalog } from "./icons/IconsCatalog";
+import { HomeDockCatalog } from "./layout/HomeDockCatalog";
 import { LayoutCatalog } from "./layout/LayoutCatalog";
 import { AvatarCatalog } from "./system/AvatarCatalog";
 import { BadgeCatalog } from "./system/BadgeCatalog";
@@ -180,6 +181,13 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Home Layout",
 		category: "Layout",
 		Page: LayoutCatalog,
+	},
+	{
+		slug: "home-dock",
+		path: "/home-dock",
+		title: "Home Dock",
+		category: "Layout",
+		Page: HomeDockCatalog,
 	},
 	{
 		slug: "members",
