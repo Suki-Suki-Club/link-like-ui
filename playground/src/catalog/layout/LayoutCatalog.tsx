@@ -56,7 +56,7 @@ export function LayoutCatalog() {
 				label="HomeScreen"
 				code={`import { HomeScreen } from "@suki-suki-club/link-like-ui/Home/Layout";\n\n<HomeScreen\n  banners={banners}\n  menuItems={menuItems}\n  defaultMenuOpen\n  menuNotificationCount={1}\n/>`}
 			>
-				<div className="relative h-[780px] w-full max-w-[430px] overflow-hidden rounded-2xl border border-ll-white/70 shadow-[0_0.5rem_1.5rem_color-mix(in_srgb,var(--color-ll-card-shadow)_30%,transparent)]">
+				<div className="relative w-full max-w-[430px] overflow-visible rounded-2xl border border-ll-white/70 shadow-[0_0.5rem_1.5rem_color-mix(in_srgb,var(--color-ll-card-shadow)_30%,transparent)]">
 					<HomeScreen
 						banners={banners}
 						menuItems={menuItems}
