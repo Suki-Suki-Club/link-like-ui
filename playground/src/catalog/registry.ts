@@ -1,4 +1,5 @@
 import type { CatalogEntry } from "./types";
+import { LayoutCatalog } from "./layout/LayoutCatalog";
 import { AvatarCatalog } from "./system/AvatarCatalog";
 import { BadgeCatalog } from "./system/BadgeCatalog";
 import { ButtonCatalog } from "./system/ButtonCatalog";
@@ -176,5 +177,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Toggle",
 		category: "System",
 		Page: ToggleCatalog,
+	},
+	{
+		slug: "layout",
+		path: "/layout",
+		title: "Home Layout",
+		category: "Layout",
+		Page: LayoutCatalog,
 	},
 ];
