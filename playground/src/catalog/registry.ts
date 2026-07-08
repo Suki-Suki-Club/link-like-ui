@@ -10,6 +10,7 @@ import { FooterPanelCatalog } from "./system/FooterPanelCatalog";
 import { GridMenuCatalog } from "./system/GridMenuCatalog";
 import { IconCatalog } from "./system/IconCatalog";
 import { ListCatalog } from "./system/ListCatalog";
+import { LoadingCatalog } from "./system/LoadingCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -88,5 +89,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "List",
 		category: "System",
 		Page: ListCatalog,
+	},
+	{
+		slug: "loading",
+		path: "/system/loading",
+		title: "Loading",
+		category: "System",
+		Page: LoadingCatalog,
 	},
 ];
