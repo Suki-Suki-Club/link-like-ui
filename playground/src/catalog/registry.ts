@@ -12,6 +12,7 @@ import { IconCatalog } from "./system/IconCatalog";
 import { ListCatalog } from "./system/ListCatalog";
 import { LoadingCatalog } from "./system/LoadingCatalog";
 import { ModalTabCatalog } from "./system/ModalTabCatalog";
+import { PageHeaderCatalog } from "./system/PageHeaderCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -104,5 +105,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Modal Tab",
 		category: "System",
 		Page: ModalTabCatalog,
+	},
+	{
+		slug: "page-header",
+		path: "/system/page-header",
+		title: "Page Header",
+		category: "System",
+		Page: PageHeaderCatalog,
 	},
 ];
