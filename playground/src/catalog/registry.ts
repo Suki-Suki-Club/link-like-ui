@@ -18,6 +18,7 @@ import { SeparatorCatalog } from "./system/SeparatorCatalog";
 import { SliderCatalog } from "./system/SliderCatalog";
 import { SystemModalCatalog } from "./system/SystemModalCatalog";
 import { TabCatalog } from "./system/TabCatalog";
+import { TableCatalog } from "./system/TableCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
 	{
@@ -152,5 +153,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Tab",
 		category: "System",
 		Page: TabCatalog,
+	},
+	{
+		slug: "table",
+		path: "/system/table",
+		title: "Table",
+		category: "System",
+		Page: TableCatalog,
 	},
 ];
