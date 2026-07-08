@@ -11,7 +11,6 @@ import { CasualButtonCatalog } from "./system/CasualButtonCatalog";
 import { CasualModalCatalog } from "./system/CasualModalCatalog";
 import { CardCatalog } from "./system/CardCatalog";
 import { FormCatalog } from "./system/FormCatalog";
-import { FooterPanelCatalog } from "./system/FooterPanelCatalog";
 import { GridMenuCatalog } from "./system/GridMenuCatalog";
 import { IconCatalog } from "./system/IconCatalog";
 import { ListCatalog } from "./system/ListCatalog";
@@ -69,13 +68,6 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Casual Modal",
 		category: "System",
 		Page: CasualModalCatalog,
-	},
-	{
-		slug: "footer-panel",
-		path: "/system/footer-panel",
-		title: "Footer Panel",
-		category: "System",
-		Page: FooterPanelCatalog,
 	},
 	{
 		slug: "form",
