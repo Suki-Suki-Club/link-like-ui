@@ -18,6 +18,7 @@ import { SeparatorCatalog } from "./system/SeparatorCatalog";
 import { SliderCatalog } from "./system/SliderCatalog";
 import { SystemModalCatalog } from "./system/SystemModalCatalog";
 import { TabCatalog } from "./system/TabCatalog";
+import { TapEffectCatalog } from "./system/TapEffectCatalog";
 import { TableCatalog } from "./system/TableCatalog";
 
 export const CATALOG: readonly CatalogEntry[] = [
@@ -160,5 +161,12 @@ export const CATALOG: readonly CatalogEntry[] = [
 		title: "Table",
 		category: "System",
 		Page: TableCatalog,
+	},
+	{
+		slug: "tap-effect",
+		path: "/system/tap-effect",
+		title: "Tap Effect",
+		category: "System",
+		Page: TapEffectCatalog,
 	},
 ];
